@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,19 +15,50 @@
     }
 
     :root {
-        --blue: #B5C9D5;
-        --black: #0a0a0a;
-        --bg: #f7f5f2;
         --border-size: 40px;
+        --transition-speed: 0.5s;
+    }
+
+    /* Dark Theme (Default) */
+    [data-theme="dark"] {
+        --panel-bg: #1a1a1a;
+        --border-color: #0a0a0a;
+        --bg: #f7f5f2;
+        --text-color: #0a0a0a;
+        --nav-text: #0a0a0a;
+        --toggle-text: rgba(255, 255, 255, 0.5);
+        --toggle-text-active: rgba(255, 255, 255, 0.85);
+        --toggle-box-border: rgba(255, 255, 255, 0.5);
+        --toggle-box-active: rgba(255, 255, 255, 0.85);
+        --cursor-color: #0a0a0a;
+        --cursor-ring: rgba(10, 10, 10, 0.3);
+        --grain-base: 0.03;
+        --grain-brightness: 0.25;
+    }
+
+    /* Light Theme */
+    [data-theme="light"] {
+        --panel-bg: #d4cfc8;
+        --border-color: #f7f5f2;
+        --bg: #0a0a0a;
+        --text-color: #f7f5f2;
+        --nav-text: #f7f5f2;
+        --toggle-text: rgba(0, 0, 0, 0.5);
+        --toggle-text-active: rgba(0, 0, 0, 0.85);
+        --toggle-box-border: rgba(0, 0, 0, 0.5);
+        --toggle-box-active: rgba(0, 0, 0, 0.85);
+        --cursor-color: #f7f5f2;
+        --cursor-ring: rgba(247, 245, 242, 0.3);
     }
 
     html, body {
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background: var(--black);
+        background: var(--border-color);
         cursor: none;
         font-family: 'Syne', sans-serif;
+        transition: background var(--transition-speed) ease;
     }
 
     /* Black border frame - no bottom */
@@ -37,10 +68,11 @@
         left: 0;
         right: 0;
         bottom: 0;
-        border: var(--border-size) solid var(--black);
+        border: var(--border-size) solid var(--border-color);
         border-bottom: none;
         pointer-events: none;
         z-index: 100;
+        transition: border-color var(--transition-speed) ease;
     }
 
     /* Toggle controls in border */
@@ -53,7 +85,8 @@
         font-size: 11px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.5);
+        color: var(--toggle-text);
+        transition: color var(--transition-speed) ease;
     }
 
     .border-controls.left-bottom {
@@ -96,17 +129,17 @@
     }
 
     .toggle-option:hover {
-        color: rgba(255, 255, 255, 1);
+        color: var(--toggle-text-active);
     }
 
     .toggle-option.active {
-        color: rgba(255, 255, 255, 0.85);
+        color: var(--toggle-text-active);
     }
 
     .toggle-box {
         width: 10px;
         height: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.5);
+        border: 1px solid var(--toggle-box-border);
         background: transparent;
         transition: all 0.3s ease;
         flex-shrink: 0;
@@ -114,8 +147,8 @@
     }
 
     .toggle-option.active .toggle-box {
-        background: rgba(255, 255, 255, 0.85);
-        border-color: rgba(255, 255, 255, 0.85);
+        background: var(--toggle-box-active);
+        border-color: var(--toggle-box-active);
     }
 
     .toggle-label {
@@ -131,6 +164,7 @@
         bottom: 0;
         background: var(--bg);
         overflow: hidden;
+        transition: background var(--transition-speed) ease;
     }
 
     /* Enhanced cursor */
@@ -138,7 +172,7 @@
         position: fixed;
         width: 10px;
         height: 10px;
-        background: var(--black);
+        background: var(--cursor-color);
         border-radius: 50%;
         pointer-events: none;
         z-index: 9999;
@@ -158,12 +192,12 @@
         position: fixed;
         width: 35px;
         height: 35px;
-        border: 1px solid rgba(10, 10, 10, 0.3);
+        border: 1px solid var(--cursor-ring);
         border-radius: 50%;
         pointer-events: none;
         z-index: 9998;
         transform: translate(-50%, -50%);
-        transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+        transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease, border-color var(--transition-speed) ease;
         opacity: 0.5;
     }
 
@@ -178,11 +212,12 @@
         position: fixed;
         width: 3px;
         height: 3px;
-        background: var(--black);
+        background: var(--cursor-color);
         border-radius: 50%;
         pointer-events: none;
         z-index: 9997;
         opacity: 0;
+        transition: background var(--transition-speed) ease;
     }
 
     .container {
@@ -210,13 +245,13 @@
         font-weight: 700;
         font-size: 15px;
         letter-spacing: 4px;
-        color: var(--black);
+        color: var(--nav-text);
         text-decoration: none;
         text-transform: uppercase;
         padding: 20px 0;
         position: relative;
         display: inline-block;
-        transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+        transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), color var(--transition-speed) ease;
     }
 
     .nav-link .letter {
@@ -231,14 +266,21 @@
     .content-panel {
         flex: 1;
         height: 100%;
-        background: var(--blue);
+        background: var(--panel-bg);
         border-radius: 40px;
         position: relative;
         overflow: hidden;
         z-index: 5;
         box-shadow:
             0 25px 80px rgba(0, 0, 0, 0.15),
-            inset 0 0 100px rgba(255, 255, 255, 0.1);
+            inset 0 0 100px rgba(255, 255, 255, 0.05);
+        transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    }
+
+    [data-theme="light"] .content-panel {
+        box-shadow:
+            0 25px 80px rgba(0, 0, 0, 0.3),
+            inset 0 0 100px rgba(0, 0, 0, 0.05);
     }
 
     #grain-canvas {
@@ -369,6 +411,21 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+  // ============================================
+  // THEME MANAGEMENT
+  // ============================================
+  let currentTheme = 'dark';
+
+  function setTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+
+      // Update shader uniforms for grain effect
+      if (material) {
+          material.uniforms.uTheme.value = theme === 'light' ? 1.0 : 0.0;
+      }
+  }
+
   // ============================================
   // TEXT SCRAMBLE / DECRYPT EFFECT (CRYPTOGRAPHY STYLE)
   // ============================================
@@ -523,7 +580,7 @@
   });
 
   // ============================================
-  // THREE.JS WEBGL GRAIN EFFECT
+  // THREE.JS WEBGL GRAIN EFFECT WITH THEME SUPPORT
   // ============================================
   const canvas = document.getElementById('grain-canvas');
   const panel = document.querySelector('.content-panel');
@@ -544,6 +601,7 @@
       uniform float uTime;
       uniform vec2 uResolution;
       uniform vec2 uMouse;
+      uniform float uTheme;
       varying vec2 vUv;
 
       float hash(vec2 p) {
@@ -634,15 +692,36 @@
           float particleDensity = density * 0.6 + 0.4;
           grain *= particleDensity;
 
-          float baseBrightness = 0.03;
-          float grainBrightness = grain * (0.25 + light * 0.35);
-          float flowGlow = density * 0.08;
+          // DARK MODE: dark base, light grain particles, cursor reveals light
+          float darkBase = 0.03;
+          float darkGrain = grain * (0.25 + light * 0.35);
+          float darkFlow = density * 0.08;
+          float darkLight = light * 0.15;
+          float darkBrightness = darkBase + darkGrain + darkFlow + darkLight;
 
-          float brightness = baseBrightness + grainBrightness + flowGlow + light * 0.15;
+          // LIGHT MODE: light base, dark grain particles, cursor reveals dark
+          float lightBase = 0.92;
+          float lightGrain = grain * (0.3 + light * 0.4);
+          float lightFlow = density * 0.1;
+          float lightDark = light * 0.2;
+          float lightBrightness = lightBase - lightGrain - lightFlow - lightDark;
 
-          vec3 color = vec3(brightness * 0.95, brightness * 0.97, brightness);
+          // Mix between dark and light mode
+          float brightness = mix(darkBrightness, lightBrightness, uTheme);
+          brightness = clamp(brightness, 0.0, 1.0);
 
-          color += light * vec3(0.02, 0.03, 0.05);
+          // Color with slight warmth
+          vec3 darkColor = vec3(brightness * 0.95, brightness * 0.97, brightness);
+          vec3 lightColor = vec3(brightness * 1.0, brightness * 0.98, brightness * 0.94);
+
+          vec3 color = mix(darkColor, lightColor, uTheme);
+
+          // Subtle color tint on cursor hover
+          color += mix(
+              light * vec3(0.02, 0.03, 0.05),
+              -light * vec3(0.03, 0.02, 0.0),
+              uTheme
+          );
 
           gl_FragColor = vec4(color, 1.0);
       }
@@ -662,7 +741,8 @@
           uniforms: {
               uTime: { value: 0 },
               uResolution: { value: new THREE.Vector2(panel.offsetWidth, panel.offsetHeight) },
-              uMouse: { value: new THREE.Vector2(0.7, 0.3) }
+              uMouse: { value: new THREE.Vector2(0.7, 0.3) },
+              uTheme: { value: 0.0 }
           }
       });
 
@@ -723,10 +803,8 @@
 
           // Handle toggle actions
           if (toggleGroup === 'theme') {
-              // Theme toggle logic (can be expanded)
-              console.log('Theme:', value);
+              setTheme(value);
           } else if (toggleGroup === 'cursor') {
-              // Cursor toggle logic
               if (value === 'hand') {
                   document.body.style.cursor = 'pointer';
                   cursor.style.display = 'none';
@@ -739,7 +817,6 @@
                   cursorParticles.forEach(p => p.style.display = 'block');
               }
           } else if (toggleGroup === 'mode') {
-              // Mode toggle logic (can be expanded)
               console.log('Mode:', value);
           }
       });
