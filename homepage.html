@@ -29,6 +29,7 @@
         font-family: 'Syne', sans-serif;
     }
 
+    /* Enhanced cursor */
     .cursor {
         position: fixed;
         width: 10px;
@@ -39,11 +40,45 @@
         z-index: 9999;
         transform: translate(-50%, -50%);
         mix-blend-mode: difference;
-        transition: transform 0.1s ease;
+        transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
     }
 
     .cursor.hover {
-        transform: translate(-50%, -50%) scale(2.5);
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Cursor ring */
+    .cursor-ring {
+        position: fixed;
+        width: 35px;
+        height: 35px;
+        border: 1px solid rgba(10, 10, 10, 0.3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+        opacity: 0.5;
+    }
+
+    .cursor-ring.hover {
+        width: 70px;
+        height: 70px;
+        opacity: 0;
+    }
+
+    /* Cursor trail particles */
+    .cursor-particle {
+        position: fixed;
+        width: 3px;
+        height: 3px;
+        background: var(--black);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9997;
+        opacity: 0;
     }
 
     .container {
@@ -63,6 +98,7 @@
         padding-left: 40px;
         position: relative;
         z-index: 10;
+        gap: 50px; /* Added more space between nav links */
     }
 
     .nav-link {
@@ -79,25 +115,15 @@
         transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
 
-    .nav-link::before {
-        content: '';
-        position: absolute;
-        left: -20px;
-        top: 50%;
-        width: 0;
-        height: 2px;
-        background: var(--black);
-        transition: width 0.3s ease;
-        transform: translateY(-50%);
-    }
-
-    .nav-link:hover::before {
-        width: 12px;
+    .nav-link .letter {
+        display: inline-block;
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .nav-link:hover {
         transform: translateX(10px);
     }
+
 
     .content-panel {
         flex: 1;
@@ -131,7 +157,7 @@
             width: 100%;
             flex-direction: row;
             justify-content: center;
-            gap: 20px;
+            gap: 30px; /* More space on mobile too */
             padding: 20px 0;
             flex-wrap: wrap;
         }
@@ -162,18 +188,29 @@
             font-size: 10px;
             padding: 8px 10px;
         }
+
+        .nav-container {
+            gap: 15px;
+        }
     }
   </style>
 </head>
 <body>
 <div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<div class="cursor-particle"></div>
+<div class="cursor-particle"></div>
+<div class="cursor-particle"></div>
+<div class="cursor-particle"></div>
+<div class="cursor-particle"></div>
 
 <div class="container">
   <nav class="nav-container">
-    <a href="#about" class="nav-link">About</a>
-    <a href="#skills" class="nav-link">Skills</a>
-    <a href="#work" class="nav-link">Work Experience</a>
-    <a href="#contact" class="nav-link">Contact</a>
+    <a href="#about" class="nav-link" data-text="About">About</a>
+    <a href="#skills" class="nav-link" data-text="Skills">Skills</a>
+    <a href="#work" class="nav-link" data-text="Work Experience">Work Experience</a>
+    <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
   </nav>
 
   <div class="content-panel">
@@ -183,24 +220,168 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-  // Custom cursor
-  const cursor = document.querySelector('.cursor');
+  // ============================================
+  // TEXT SCRAMBLE / DECRYPT EFFECT (CRYPTOGRAPHY STYLE)
+  // ============================================
+  class TextScramble {
+      constructor(el) {
+          this.el = el;
+          // Cryptographic characters - letters, numbers, symbols
+          this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
+          this.update = this.update.bind(this);
+      }
+
+      setText(newText) {
+          const oldText = this.el.innerText;
+          const length = Math.max(oldText.length, newText.length);
+          const promise = new Promise(resolve => this.resolve = resolve);
+          this.queue = [];
+
+          for (let i = 0; i < length; i++) {
+              const from = oldText[i] || '';
+              const to = newText[i] || '';
+              // Smooth staggered timing
+              const start = i * 3;
+              const end = start + 25 + Math.floor(Math.random() * 15);
+              this.queue.push({ from, to, start, end });
+          }
+
+          cancelAnimationFrame(this.frameRequest);
+          this.frame = 0;
+          this.update();
+          return promise;
+      }
+
+      update() {
+          let output = '';
+          let complete = 0;
+
+          for (let i = 0; i < this.queue.length; i++) {
+              let { from, to, start, end, char } = this.queue[i];
+
+              if (this.frame >= end) {
+                  complete++;
+                  output += `<span class="letter">${to}</span>`;
+              } else if (this.frame >= start) {
+                  // Smooth character cycling
+                  if (!char || Math.random() < 0.2) {
+                      char = this.randomChar();
+                      this.queue[i].char = char;
+                  }
+                  // Gradual opacity increase as it approaches final letter
+                  const progress = (this.frame - start) / (end - start);
+                  const opacity = 0.5 + (progress * 0.5);
+                  output += `<span class="letter" style="opacity: ${opacity}">${char}</span>`;
+              } else {
+                  output += `<span class="letter">${from}</span>`;
+              }
+          }
+
+          this.el.innerHTML = output;
+
+          if (complete === this.queue.length) {
+              this.resolve();
+          } else {
+              this.frameRequest = requestAnimationFrame(this.update);
+              this.frame++;
+          }
+      }
+
+      randomChar() {
+          return this.chars[Math.floor(Math.random() * this.chars.length)];
+      }
+  }
+
+  // Initialize text scramble for nav links
   const navLinks = document.querySelectorAll('.nav-link');
+  const scrambleInstances = [];
+
+  navLinks.forEach((link, index) => {
+      const text = link.dataset.text;
+      const scramble = new TextScramble(link);
+      scrambleInstances.push({ scramble, text });
+
+      // Wrap initial text in letter spans
+      link.innerHTML = text.split('').map(char =>
+          char === ' ' ? ' ' : `<span class="letter">${char}</span>`
+      ).join('');
+  });
+
+  // Trigger scramble effect on hover
+  navLinks.forEach((link, index) => {
+      link.addEventListener('mouseenter', () => {
+          scrambleInstances[index].scramble.setText(scrambleInstances[index].text);
+      });
+  });
+
+  // ============================================
+  // ENHANCED CURSOR SYSTEM
+  // ============================================
+  const cursor = document.querySelector('.cursor');
+  const cursorRing = document.querySelector('.cursor-ring');
+  const cursorParticles = document.querySelectorAll('.cursor-particle');
+
+  let mouseX = 0, mouseY = 0;
+  let cursorX = 0, cursorY = 0;
+  let ringX = 0, ringY = 0;
+  let particlePositions = Array(5).fill().map(() => ({ x: 0, y: 0 }));
 
   document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
+      mouseX = e.clientX;
+      mouseY = e.clientY;
   });
+
+  function animateCursor() {
+      cursorX += (mouseX - cursorX) * 0.15;
+      cursorY += (mouseY - cursorY) * 0.15;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+
+      ringX += (mouseX - ringX) * 0.08;
+      ringY += (mouseY - ringY) * 0.08;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+
+      cursorParticles.forEach((particle, i) => {
+          const delay = (i + 1) * 0.05;
+          particlePositions[i].x += (mouseX - particlePositions[i].x) * delay;
+          particlePositions[i].y += (mouseY - particlePositions[i].y) * delay;
+
+          particle.style.left = particlePositions[i].x + 'px';
+          particle.style.top = particlePositions[i].y + 'px';
+          particle.style.opacity = 0.25 - (i * 0.04);
+          particle.style.transform = `translate(-50%, -50%) scale(${1 - i * 0.15})`;
+      });
+
+      requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
 
   navLinks.forEach(link => {
-      link.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      link.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      link.addEventListener('mouseenter', () => {
+          cursor.classList.add('hover');
+          cursorRing.classList.add('hover');
+      });
+      link.addEventListener('mouseleave', () => {
+          cursor.classList.remove('hover');
+          cursorRing.classList.remove('hover');
+      });
   });
 
-  document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
-  document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+  document.addEventListener('mouseleave', () => {
+      cursor.style.opacity = '0';
+      cursorRing.style.opacity = '0';
+      cursorParticles.forEach(p => p.style.opacity = '0');
+  });
 
-  // Three.js WebGL Grain Effect
+  document.addEventListener('mouseenter', () => {
+      cursor.style.opacity = '1';
+      cursorRing.style.opacity = '0.5';
+  });
+
+  // ============================================
+  // THREE.JS WEBGL GRAIN EFFECT
+  // ============================================
   const canvas = document.getElementById('grain-canvas');
   const panel = document.querySelector('.content-panel');
 
