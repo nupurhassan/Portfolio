@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NUPUR - Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --blue: #B5C9D5;
+        --black: #0a0a0a;
+        --bg: #f7f5f2;
+    }
+
+    html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        cursor: none;
+        font-family: 'Syne', sans-serif;
+    }
+
+    /* Enhanced cursor */
+    .cursor {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: var(--black);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        mix-blend-mode: difference;
+        transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+    }
+
+    .cursor.hover {
+        width: 50px;
+        height: 50px;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Cursor ring */
+    .cursor-ring {
+        position: fixed;
+        width: 35px;
+        height: 35px;
+        border: 1px solid rgba(10, 10, 10, 0.3);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+        opacity: 0.5;
+    }
+
+    .cursor-ring.hover {
+        width: 70px;
+        height: 70px;
+        opacity: 0;
+    }
+
+    /* Cursor trail particles */
+    .cursor-particle {
+        position: fixed;
+        width: 3px;
+        height: 3px;
+        background: var(--black);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9997;
+        opacity: 0;
+    }
+
+    .container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        position: relative;
+        padding: 40px;
+    }
+
+    .nav-container {
+        width: 320px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 40px;
+        position: relative;
+        z-index: 10;
+        gap: 50px; /* Added more space between nav links */
+    }
+
+    .nav-link {
+        font-family: 'Syne', sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 4px;
+        color: var(--black);
+        text-decoration: none;
+        text-transform: uppercase;
+        padding: 20px 0;
+        position: relative;
+        display: inline-block;
+        transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+
+    .nav-link .letter {
+        display: inline-block;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .nav-link:hover {
+        transform: translateX(10px);
+    }
+
+
+    .content-panel {
+        flex: 1;
+        height: 100%;
+        background: var(--blue);
+        border-radius: 40px;
+        position: relative;
+        overflow: hidden;
+        z-index: 5;
+        box-shadow:
+            0 25px 80px rgba(0, 0, 0, 0.15),
+            inset 0 0 100px rgba(255, 255, 255, 0.1);
+    }
+
+    #grain-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    @media (max-width: 900px) {
+        .container {
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .nav-container {
+            width: 100%;
+            flex-direction: row;
+            justify-content: center;
+            gap: 30px; /* More space on mobile too */
+            padding: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            font-size: 12px;
+            padding: 10px 15px;
+            letter-spacing: 2px;
+        }
+
+        .nav-link::before {
+            display: none;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .content-panel {
+            flex: 1;
+            min-height: 500px;
+            border-radius: 30px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .nav-link {
+            font-size: 10px;
+            padding: 8px 10px;
+        }
+
+        .nav-container {
+            gap: 15px;
+        }
+    }
+  </style>
+</head>
+<body>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<div class="cursor-particle"></div>
+<div class="cursor-particle"></div>
+<div class="cursor-particle"></div>
+<div class="cursor-particle"></div>
+<div class="cursor-particle"></div>
+
+<div class="container">
+  <nav class="nav-container">
+    <a href="#about" class="nav-link" data-text="About">About</a>
+    <a href="#skills" class="nav-link" data-text="Skills">Skills</a>
+    <a href="#work" class="nav-link" data-text="Work Experience">Work Experience</a>
+    <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
+  </nav>
+
+  <div class="content-panel">
+    <canvas id="grain-canvas"></canvas>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // ============================================
+  // TEXT SCRAMBLE / DECRYPT EFFECT (CRYPTOGRAPHY STYLE)
+  // ============================================
+  class TextScramble {
+      constructor(el) {
+          this.el = el;
+          // Cryptographic characters - letters, numbers, symbols
+          this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
+          this.update = this.update.bind(this);
+      }
+
+      setText(newText) {
+          const oldText = this.el.innerText;
+          const length = Math.max(oldText.length, newText.length);
+          const promise = new Promise(resolve => this.resolve = resolve);
+          this.queue = [];
+
+          for (let i = 0; i < length; i++) {
+              const from = oldText[i] || '';
+              const to = newText[i] || '';
+              // Smooth staggered timing
+              const start = i * 3;
+              const end = start + 25 + Math.floor(Math.random() * 15);
+              this.queue.push({ from, to, start, end });
+          }
+
+          cancelAnimationFrame(this.frameRequest);
+          this.frame = 0;
+          this.update();
+          return promise;
+      }
+
+      update() {
+          let output = '';
+          let complete = 0;
+
+          for (let i = 0; i < this.queue.length; i++) {
+              let { from, to, start, end, char } = this.queue[i];
+
+              if (this.frame >= end) {
+                  complete++;
+                  output += `<span class="letter">${to}</span>`;
+              } else if (this.frame >= start) {
+                  // Smooth character cycling
+                  if (!char || Math.random() < 0.2) {
+                      char = this.randomChar();
+                      this.queue[i].char = char;
+                  }
+                  // Gradual opacity increase as it approaches final letter
+                  const progress = (this.frame - start) / (end - start);
+                  const opacity = 0.5 + (progress * 0.5);
+                  output += `<span class="letter" style="opacity: ${opacity}">${char}</span>`;
+              } else {
+                  output += `<span class="letter">${from}</span>`;
+              }
+          }
+
+          this.el.innerHTML = output;
+
+          if (complete === this.queue.length) {
+              this.resolve();
+          } else {
+              this.frameRequest = requestAnimationFrame(this.update);
+              this.frame++;
+          }
+      }
+
+      randomChar() {
+          return this.chars[Math.floor(Math.random() * this.chars.length)];
+      }
+  }
+
+  // Initialize text scramble for nav links
+  const navLinks = document.querySelectorAll('.nav-link');
+  const scrambleInstances = [];
+
+  navLinks.forEach((link, index) => {
+      const text = link.dataset.text;
+      const scramble = new TextScramble(link);
+      scrambleInstances.push({ scramble, text });
+
+      // Wrap initial text in letter spans
+      link.innerHTML = text.split('').map(char =>
+          char === ' ' ? ' ' : `<span class="letter">${char}</span>`
+      ).join('');
+  });
+
+  // Trigger scramble effect on hover
+  navLinks.forEach((link, index) => {
+      link.addEventListener('mouseenter', () => {
+          scrambleInstances[index].scramble.setText(scrambleInstances[index].text);
+      });
+  });
+
+  // ============================================
+  // ENHANCED CURSOR SYSTEM
+  // ============================================
+  const cursor = document.querySelector('.cursor');
+  const cursorRing = document.querySelector('.cursor-ring');
+  const cursorParticles = document.querySelectorAll('.cursor-particle');
+
+  let mouseX = 0, mouseY = 0;
+  let cursorX = 0, cursorY = 0;
+  let ringX = 0, ringY = 0;
+  let particlePositions = Array(5).fill().map(() => ({ x: 0, y: 0 }));
+
+  document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+  });
+
+  function animateCursor() {
+      cursorX += (mouseX - cursorX) * 0.15;
+      cursorY += (mouseY - cursorY) * 0.15;
+      cursor.style.left = cursorX + 'px';
+      cursor.style.top = cursorY + 'px';
+
+      ringX += (mouseX - ringX) * 0.08;
+      ringY += (mouseY - ringY) * 0.08;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+
+      cursorParticles.forEach((particle, i) => {
+          const delay = (i + 1) * 0.05;
+          particlePositions[i].x += (mouseX - particlePositions[i].x) * delay;
+          particlePositions[i].y += (mouseY - particlePositions[i].y) * delay;
+
+          particle.style.left = particlePositions[i].x + 'px';
+          particle.style.top = particlePositions[i].y + 'px';
+          particle.style.opacity = 0.25 - (i * 0.04);
+          particle.style.transform = `translate(-50%, -50%) scale(${1 - i * 0.15})`;
+      });
+
+      requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  navLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+          cursor.classList.add('hover');
+          cursorRing.classList.add('hover');
+      });
+      link.addEventListener('mouseleave', () => {
+          cursor.classList.remove('hover');
+          cursorRing.classList.remove('hover');
+      });
+  });
+
+  document.addEventListener('mouseleave', () => {
+      cursor.style.opacity = '0';
+      cursorRing.style.opacity = '0';
+      cursorParticles.forEach(p => p.style.opacity = '0');
+  });
+
+  document.addEventListener('mouseenter', () => {
+      cursor.style.opacity = '1';
+      cursorRing.style.opacity = '0.5';
+  });
+
+  // ============================================
+  // THREE.JS WEBGL GRAIN EFFECT
+  // ============================================
+  const canvas = document.getElementById('grain-canvas');
+  const panel = document.querySelector('.content-panel');
+
+  let scene, camera, renderer, material;
+  let mouse = { x: 0.7, y: 0.3 };
+  let targetMouse = { x: 0.7, y: 0.3 };
+
+  const vertexShader = `
+      varying vec2 vUv;
+      void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+  `;
+
+  const fragmentShader = `
+      uniform float uTime;
+      uniform vec2 uResolution;
+      uniform vec2 uMouse;
+      varying vec2 vUv;
+
+      // Hash function for sharp noise
+      float hash(vec2 p) {
+          p = fract(p * vec2(234.34, 435.345));
+          p += dot(p, p + 34.23);
+          return fract(p.x * p.y);
+      }
+
+      // Simplex noise
+      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+
+      float snoise(vec2 v) {
+          const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+                             -0.577350269189626, 0.024390243902439);
+          vec2 i  = floor(v + dot(v, C.yy));
+          vec2 x0 = v - i + dot(i, C.xx);
+          vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+          vec4 x12 = x0.xyxy + C.xxzz;
+          x12.xy -= i1;
+          i = mod289(i);
+          vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+          vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+          m = m*m;
+          m = m*m;
+          vec3 x = 2.0 * fract(p * C.www) - 1.0;
+          vec3 h = abs(x) - 0.5;
+          vec3 ox = floor(x + 0.5);
+          vec3 a0 = x - ox;
+          m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+          vec3 g;
+          g.x = a0.x * x0.x + h.x * x0.y;
+          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+          return 130.0 * dot(m, g);
+      }
+
+      // FBM for flow field
+      float fbm(vec2 p) {
+          float value = 0.0;
+          float amplitude = 0.5;
+          for (int i = 0; i < 5; i++) {
+              value += amplitude * snoise(p);
+              amplitude *= 0.5;
+              p *= 2.0;
+          }
+          return value;
+      }
+
+      void main() {
+          vec2 uv = vUv;
+          float time = uTime * 0.08;
+
+          // Flow field for movement direction
+          vec2 flow;
+          flow.x = fbm(uv * 2.0 + time * 0.5);
+          flow.y = fbm(uv * 2.0 + vec2(5.0, 3.0) + time * 0.4);
+
+          // Distorted UV for particle movement
+          vec2 distortedUV = uv + flow * 0.03;
+
+          // Sharp grain particles - multiple layers
+          float grainScale1 = 350.0;
+          float grainScale2 = 500.0;
+          float grainScale3 = 250.0;
+
+          // Moving grain coordinates
+          vec2 grainUV1 = distortedUV * grainScale1 + time * 15.0;
+          vec2 grainUV2 = distortedUV * grainScale2 - time * 12.0;
+          vec2 grainUV3 = distortedUV * grainScale3 + vec2(time * 8.0, -time * 10.0);
+
+          // Sharp hash-based grain
+          float grain1 = hash(floor(grainUV1));
+          float grain2 = hash(floor(grainUV2));
+          float grain3 = hash(floor(grainUV3));
+
+          // Threshold for sharp particles
+          float threshold1 = 0.75;
+          float threshold2 = 0.78;
+          float threshold3 = 0.72;
+
+          grain1 = grain1 > threshold1 ? 1.0 : 0.0;
+          grain2 = grain2 > threshold2 ? 1.0 : 0.0;
+          grain3 = grain3 > threshold3 ? 1.0 : 0.0;
+
+          // Combine grains
+          float grain = max(max(grain1 * 0.7, grain2 * 0.5), grain3 * 0.6);
+
+          // Flow-based density variation
+          float density = fbm(uv * 3.0 + time * 0.3) * 0.5 + 0.5;
+          density = smoothstep(0.2, 0.8, density);
+
+          // Mouse light effect
+          vec2 aspect = vec2(uResolution.x / uResolution.y, 1.0);
+          float mouseDist = distance(uv * aspect, uMouse * aspect);
+          float light = smoothstep(0.7, 0.0, mouseDist);
+          light = pow(light, 1.5);
+
+          // Combine density with grain
+          float particleDensity = density * 0.6 + 0.4;
+          grain *= particleDensity;
+
+          // Brightness based on flow and light
+          float baseBrightness = 0.03;
+          float grainBrightness = grain * (0.25 + light * 0.35);
+          float flowGlow = density * 0.08;
+
+          float brightness = baseBrightness + grainBrightness + flowGlow + light * 0.15;
+
+          // Color
+          vec3 color = vec3(brightness * 0.95, brightness * 0.97, brightness);
+
+          // Subtle color variation in lit areas
+          color += light * vec3(0.02, 0.03, 0.05);
+
+          gl_FragColor = vec4(color, 1.0);
+      }
+  `;
+
+  function init() {
+      scene = new THREE.Scene();
+      camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false });
+      renderer.setSize(panel.offsetWidth, panel.offsetHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      material = new THREE.ShaderMaterial({
+          vertexShader: vertexShader,
+          fragmentShader: fragmentShader,
+          uniforms: {
+              uTime: { value: 0 },
+              uResolution: { value: new THREE.Vector2(panel.offsetWidth, panel.offsetHeight) },
+              uMouse: { value: new THREE.Vector2(0.7, 0.3) }
+          }
+      });
+
+      const geometry = new THREE.PlaneGeometry(2, 2);
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+  }
+
+  function animate() {
+      requestAnimationFrame(animate);
+
+      mouse.x += (targetMouse.x - mouse.x) * 0.015;
+      mouse.y += (targetMouse.y - mouse.y) * 0.015;
+
+      material.uniforms.uTime.value += 0.016;
+      material.uniforms.uMouse.value.set(mouse.x, mouse.y);
+
+      renderer.render(scene, camera);
+  }
+
+  function onResize() {
+      renderer.setSize(panel.offsetWidth, panel.offsetHeight);
+      material.uniforms.uResolution.value.set(panel.offsetWidth, panel.offsetHeight);
+  }
+
+  panel.addEventListener('mousemove', (e) => {
+      const rect = panel.getBoundingClientRect();
+      targetMouse.x = (e.clientX - rect.left) / rect.width;
+      targetMouse.y = 1.0 - (e.clientY - rect.top) / rect.height;
+  });
+
+  panel.addEventListener('mouseleave', () => {
+      targetMouse.x = 0.7;
+      targetMouse.y = 0.3;
+  });
+
+  init();
+  animate();
+  window.addEventListener('resize', onResize);
+</script>
+</body>
+</html>
