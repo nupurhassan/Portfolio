@@ -19,25 +19,8 @@
         --transition-speed: 0.5s;
     }
 
-    /* Dark Theme (Default) */
+    /* Dark Theme (Default) - Light border, dark content */
     [data-theme="dark"] {
-        --panel-bg: #1a1a1a;
-        --border-color: #0a0a0a;
-        --bg: #f7f5f2;
-        --text-color: #0a0a0a;
-        --nav-text: #0a0a0a;
-        --toggle-text: rgba(255, 255, 255, 0.5);
-        --toggle-text-active: rgba(255, 255, 255, 0.85);
-        --toggle-box-border: rgba(255, 255, 255, 0.5);
-        --toggle-box-active: rgba(255, 255, 255, 0.85);
-        --cursor-color: #0a0a0a;
-        --cursor-ring: rgba(10, 10, 10, 0.3);
-        --grain-base: 0.03;
-        --grain-brightness: 0.25;
-    }
-
-    /* Light Theme */
-    [data-theme="light"] {
         --panel-bg: #d4cfc8;
         --border-color: #f7f5f2;
         --bg: #0a0a0a;
@@ -49,6 +32,21 @@
         --toggle-box-active: rgba(0, 0, 0, 0.85);
         --cursor-color: #f7f5f2;
         --cursor-ring: rgba(247, 245, 242, 0.3);
+    }
+
+    /* Light Theme - Dark border, light content */
+    [data-theme="light"] {
+        --panel-bg: #1a1a1a;
+        --border-color: #0a0a0a;
+        --bg: #f7f5f2;
+        --text-color: #0a0a0a;
+        --nav-text: #0a0a0a;
+        --toggle-text: rgba(255, 255, 255, 0.5);
+        --toggle-text-active: rgba(255, 255, 255, 0.85);
+        --toggle-box-border: rgba(255, 255, 255, 0.5);
+        --toggle-box-active: rgba(255, 255, 255, 0.85);
+        --cursor-color: #0a0a0a;
+        --cursor-ring: rgba(10, 10, 10, 0.3);
     }
 
     html, body {
@@ -111,11 +109,13 @@
     }
 
     .border-controls.top-center {
-        top: 8px;
+        top: 0;
+        height: var(--border-size);
         left: 50%;
         transform: translateX(-50%);
         flex-direction: row;
         align-items: center;
+        justify-content: center;
         gap: 25px;
     }
 
@@ -442,8 +442,9 @@
       document.documentElement.setAttribute('data-theme', theme);
 
       // Update shader uniforms for grain effect
+      // Now dark = 1.0 (light grain), light = 0.0 (dark grain)
       if (material) {
-          material.uniforms.uTheme.value = theme === 'light' ? 1.0 : 0.0;
+          material.uniforms.uTheme.value = theme === 'dark' ? 1.0 : 0.0;
       }
   }
 
@@ -763,7 +764,7 @@
               uTime: { value: 0 },
               uResolution: { value: new THREE.Vector2(panel.offsetWidth, panel.offsetHeight) },
               uMouse: { value: new THREE.Vector2(0.7, 0.3) },
-              uTheme: { value: 0.0 }
+              uTheme: { value: 1.0 }
           }
       });
 
