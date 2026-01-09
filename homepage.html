@@ -19,7 +19,7 @@
         --transition-speed: 0.5s;
     }
 
-    /* Dark Theme (Default) - Light border, dark content */
+    /* Dark Theme (Default) - Light border, dark inner bg */
     [data-theme="dark"] {
         --panel-bg: #d4cfc8;
         --border-color: #f7f5f2;
@@ -30,11 +30,11 @@
         --toggle-text-active: rgba(0, 0, 0, 0.85);
         --toggle-box-border: rgba(0, 0, 0, 0.5);
         --toggle-box-active: rgba(0, 0, 0, 0.85);
-        --cursor-color: #f7f5f2;
-        --cursor-ring: rgba(247, 245, 242, 0.3);
+        --cursor-color: #0a0a0a;
+        --cursor-ring: rgba(10, 10, 10, 0.4);
     }
 
-    /* Light Theme - Dark border, light content */
+    /* Light Theme - Dark border, light inner bg */
     [data-theme="light"] {
         --panel-bg: #1a1a1a;
         --border-color: #0a0a0a;
@@ -46,7 +46,7 @@
         --toggle-box-border: rgba(255, 255, 255, 0.5);
         --toggle-box-active: rgba(255, 255, 255, 0.85);
         --cursor-color: #0a0a0a;
-        --cursor-ring: rgba(10, 10, 10, 0.3);
+        --cursor-ring: rgba(10, 10, 10, 0.4);
     }
 
     html, body {
@@ -193,19 +193,18 @@
         position: fixed;
         width: 10px;
         height: 10px;
-        background: var(--cursor-color);
+        background: #ffffff;
         border-radius: 50%;
         pointer-events: none;
         z-index: 9999;
         transform: translate(-50%, -50%);
         mix-blend-mode: difference;
-        transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+        transition: width 0.3s ease, height 0.3s ease;
     }
 
     .cursor.hover {
         width: 50px;
         height: 50px;
-        background: rgba(255, 255, 255, 0.9);
     }
 
     /* Cursor ring */
@@ -213,13 +212,14 @@
         position: fixed;
         width: 35px;
         height: 35px;
-        border: 1px solid var(--cursor-ring);
+        border: 1px solid #ffffff;
         border-radius: 50%;
         pointer-events: none;
         z-index: 9998;
         transform: translate(-50%, -50%);
-        transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease, border-color var(--transition-speed) ease;
-        opacity: 0.5;
+        mix-blend-mode: difference;
+        transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+        opacity: 0.6;
     }
 
     .cursor-ring.hover {
@@ -233,12 +233,12 @@
         position: fixed;
         width: 3px;
         height: 3px;
-        background: var(--cursor-color);
+        background: #ffffff;
         border-radius: 50%;
         pointer-events: none;
         z-index: 9997;
+        mix-blend-mode: difference;
         opacity: 0;
-        transition: background var(--transition-speed) ease;
     }
 
     .container {
@@ -714,34 +714,34 @@
           float particleDensity = density * 0.6 + 0.4;
           grain *= particleDensity;
 
-          // DARK MODE: dark base, light grain particles, cursor reveals light
-          float darkBase = 0.03;
-          float darkGrain = grain * (0.25 + light * 0.35);
-          float darkFlow = density * 0.08;
-          float darkLight = light * 0.15;
-          float darkBrightness = darkBase + darkGrain + darkFlow + darkLight;
+          // DARK MODE (uTheme = 1.0): Light base, dark grain particles, cursor reveals darker areas
+          float darkBase = 0.92;
+          float darkGrain = grain * (0.3 + light * 0.5);
+          float darkFlow = density * 0.1;
+          float darkDark = light * 0.35;
+          float darkBrightness = darkBase - darkGrain - darkFlow - darkDark;
 
-          // LIGHT MODE: light base, dark grain particles, cursor reveals dark
-          float lightBase = 0.92;
-          float lightGrain = grain * (0.3 + light * 0.4);
-          float lightFlow = density * 0.1;
-          float lightDark = light * 0.2;
-          float lightBrightness = lightBase - lightGrain - lightFlow - lightDark;
+          // LIGHT MODE (uTheme = 0.0): Dark base, light grain particles, cursor reveals lighter areas
+          float lightBase = 0.03;
+          float lightGrain = grain * (0.25 + light * 0.35);
+          float lightFlow = density * 0.08;
+          float lightLight = light * 0.15;
+          float lightBrightness = lightBase + lightGrain + lightFlow + lightLight;
 
-          // Mix between dark and light mode
-          float brightness = mix(darkBrightness, lightBrightness, uTheme);
+          // Mix between light and dark mode (uTheme: 0=light mode, 1=dark mode)
+          float brightness = mix(lightBrightness, darkBrightness, uTheme);
           brightness = clamp(brightness, 0.0, 1.0);
 
           // Color with slight warmth
-          vec3 darkColor = vec3(brightness * 0.95, brightness * 0.97, brightness);
-          vec3 lightColor = vec3(brightness * 1.0, brightness * 0.98, brightness * 0.94);
+          vec3 lightColor = vec3(brightness * 0.95, brightness * 0.97, brightness);
+          vec3 darkColor = vec3(brightness * 1.0, brightness * 0.98, brightness * 0.94);
 
-          vec3 color = mix(darkColor, lightColor, uTheme);
+          vec3 color = mix(lightColor, darkColor, uTheme);
 
           // Subtle color tint on cursor hover
           color += mix(
               light * vec3(0.02, 0.03, 0.05),
-              -light * vec3(0.03, 0.02, 0.0),
+              -light * vec3(0.04, 0.03, 0.01),
               uTheme
           );
 
