@@ -1,0 +1,66 @@
+/* design tokens */
+
+:root {
+
+    --black: #000000;
+    --white: #ffffff;
+    --off-white: #f7f5f2;
+    --near-black: #0a0a0a;
+    --dark-gray: #1a1a1a;
+    --warm-gray: #d4cfc8;
+
+  
+    --border-size: 40px;
+
+
+    --transition-speed: 0.5s;
+    --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --ease-out: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+
+    --font-display: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+
+
+    --z-content: 1;
+    --z-overlay: 100;
+    --z-cursor-trail: 9997;
+    --z-cursor-ring: 9998;
+    --z-cursor: 9999;
+    --z-transition: 10000;
+}
+
+
+[data-theme="dark"] {
+    --panel-bg: var(--warm-gray);
+    --border-color: var(--off-white);
+    --bg: var(--near-black);
+    --text-color: var(--off-white);
+    --nav-text: var(--off-white);
+    --toggle-text: rgba(0, 0, 0, 0.5);
+    --toggle-text-active: rgba(0, 0, 0, 0.85);
+    --toggle-box-border: rgba(0, 0, 0, 0.5);
+    --toggle-box-active: rgba(0, 0, 0, 0.85);
+}
+
+
+[data-theme="light"] {
+    --panel-bg: var(--dark-gray);
+    --border-color: var(--near-black);
+    --bg: var(--off-white);
+    --text-color: var(--near-black);
+    --nav-text: var(--near-black);
+    --toggle-text: rgba(255, 255, 255, 0.5);
+    --toggle-text-active: rgba(255, 255, 255, 0.85);
+    --toggle-box-border: rgba(255, 255, 255, 0.5);
+    --toggle-box-active: rgba(255, 255, 255, 0.85);
+}
+
+
+@media (max-width: 900px) {
+    :root { --border-size: 25px; }
+}
+
+@media (max-width: 500px) {
+    :root { --border-size: 18px; }
+}
