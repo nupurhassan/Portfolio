@@ -1,414 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NUPUR - Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUPUR - Portfolio</title>
 
-    :root {
-        --border-size: 40px;
-        --transition-speed: 0.5s;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-    /* Dark Theme (Default) - Light border, dark inner bg */
-    [data-theme="dark"] {
-        --panel-bg: #d4cfc8;
-        --border-color: #f7f5f2;
-        --bg: #0a0a0a;
-        --text-color: #f7f5f2;
-        --nav-text: #f7f5f2;
-        --toggle-text: rgba(0, 0, 0, 0.5);
-        --toggle-text-active: rgba(0, 0, 0, 0.85);
-        --toggle-box-border: rgba(0, 0, 0, 0.5);
-        --toggle-box-active: rgba(0, 0, 0, 0.85);
-        --cursor-color: #0a0a0a;
-        --cursor-ring: rgba(10, 10, 10, 0.4);
-    }
-
-    /* Light Theme - Dark border, light inner bg */
-    [data-theme="light"] {
-        --panel-bg: #1a1a1a;
-        --border-color: #0a0a0a;
-        --bg: #f7f5f2;
-        --text-color: #0a0a0a;
-        --nav-text: #0a0a0a;
-        --toggle-text: rgba(255, 255, 255, 0.5);
-        --toggle-text-active: rgba(255, 255, 255, 0.85);
-        --toggle-box-border: rgba(255, 255, 255, 0.5);
-        --toggle-box-active: rgba(255, 255, 255, 0.85);
-        --cursor-color: #0a0a0a;
-        --cursor-ring: rgba(10, 10, 10, 0.4);
-    }
-
-    html, body {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        background: var(--border-color);
-        cursor: none;
-        font-family: 'Syne', sans-serif;
-        transition: background var(--transition-speed) ease;
-    }
-
-    /* Black border frame - no bottom */
-    .border-frame {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border: var(--border-size) solid var(--border-color);
-        border-bottom: none;
-        pointer-events: none;
-        z-index: 100;
-        transition: border-color var(--transition-speed) ease;
-    }
-
-    /* Toggle controls in border */
-    .border-controls {
-        position: fixed;
-        pointer-events: auto;
-        z-index: 101;
-        display: flex;
-        font-family: 'Space Mono', monospace;
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: var(--toggle-text);
-        transition: color var(--transition-speed) ease;
-    }
-
-    .border-controls.left-bottom {
-        left: 10px;
-        bottom: 20px;
-        writing-mode: vertical-rl;
-        text-orientation: mixed;
-        transform: rotate(180deg);
-        flex-direction: row;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .border-controls.right-bottom {
-        right: 10px;
-        bottom: 20px;
-        writing-mode: vertical-lr;
-        text-orientation: mixed;
-        flex-direction: row;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .border-controls.top-center {
-        top: 0;
-        height: var(--border-size);
-        left: 50%;
-        transform: translateX(-50%);
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 25px;
-    }
-
-    .toggle-option {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        cursor: pointer;
-        transition: color 0.3s ease;
-        white-space: nowrap;
-    }
-
-    .toggle-option:hover {
-        color: var(--toggle-text-active);
-    }
-
-    .toggle-option.active {
-        color: var(--toggle-text-active);
-    }
-
-    .toggle-box {
-        width: 0;
-        height: 0;
-        border-top: 4px solid transparent;
-        border-bottom: 4px solid transparent;
-        border-right: 6px solid var(--toggle-box-border);
-        background: transparent;
-        transition: all 0.3s ease;
-        flex-shrink: 0;
-        display: inline-block;
-    }
-
-    .toggle-option.active .toggle-box {
-        border-right: none;
-        border-left: 6px solid var(--toggle-box-active);
-        border-top: 4px solid transparent;
-        border-bottom: 4px solid transparent;
-    }
-
-    /* Top center toggles - vertical triangles */
-    .border-controls.top-center .toggle-box {
-        border-top: none;
-        border-bottom: none;
-        border-right: none;
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-        border-top: 6px solid var(--toggle-box-border);
-    }
-
-    .border-controls.top-center .toggle-option.active .toggle-box {
-        border-top: none;
-        border-bottom: 6px solid var(--toggle-box-active);
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-    }
-
-    .toggle-label {
-        display: inline;
-    }
-
-    /* Inner content area */
-    .inner-wrapper {
-        position: absolute;
-        top: var(--border-size);
-        left: var(--border-size);
-        right: var(--border-size);
-        bottom: 0;
-        background: var(--bg);
-        overflow: hidden;
-        transition: background var(--transition-speed) ease;
-    }
-
-    /* Enhanced cursor */
-    .cursor {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background: #ffffff;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999;
-        transform: translate(-50%, -50%);
-        mix-blend-mode: difference;
-        transition: width 0.3s ease, height 0.3s ease;
-    }
-
-    .cursor.hover {
-        width: 50px;
-        height: 50px;
-    }
-
-    /* Cursor ring */
-    .cursor-ring {
-        position: fixed;
-        width: 35px;
-        height: 35px;
-        border: 1px solid #ffffff;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9998;
-        transform: translate(-50%, -50%);
-        mix-blend-mode: difference;
-        transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
-        opacity: 0.6;
-    }
-
-    .cursor-ring.hover {
-        width: 70px;
-        height: 70px;
-        opacity: 0;
-    }
-
-    /* Cursor trail particles */
-    .cursor-particle {
-        position: fixed;
-        width: 3px;
-        height: 3px;
-        background: #ffffff;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9997;
-        mix-blend-mode: difference;
-        opacity: 0;
-    }
-
-    .container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        position: relative;
-        padding: 40px;
-    }
-
-    .nav-container {
-        width: 320px;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding-left: 40px;
-        position: relative;
-        z-index: 10;
-        gap: 50px;
-    }
-
-    .nav-link {
-        font-family: 'Syne', sans-serif;
-        font-weight: 700;
-        font-size: 15px;
-        letter-spacing: 4px;
-        color: var(--nav-text);
-        text-decoration: none;
-        text-transform: uppercase;
-        padding: 20px 0;
-        position: relative;
-        display: inline-block;
-        transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), color var(--transition-speed) ease;
-    }
-
-    .nav-link .letter {
-        display: inline-block;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-
-    .nav-link:hover {
-        transform: translateX(10px);
-    }
-
-    .content-panel {
-        flex: 1;
-        height: 100%;
-        background: var(--panel-bg);
-        border-radius: 40px;
-        position: relative;
-        overflow: hidden;
-        z-index: 5;
-        box-shadow:
-            0 25px 80px rgba(0, 0, 0, 0.15),
-            inset 0 0 100px rgba(255, 255, 255, 0.05);
-        transition: background var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-    }
-
-    [data-theme="light"] .content-panel {
-        box-shadow:
-            0 25px 80px rgba(0, 0, 0, 0.3),
-            inset 0 0 100px rgba(0, 0, 0, 0.05);
-    }
-
-    #grain-canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-    }
-
-    @media (max-width: 900px) {
-        :root {
-            --border-size: 25px;
-        }
-
-        .container {
-            flex-direction: column;
-            padding: 20px;
-        }
-
-        .nav-container {
-            width: 100%;
-            flex-direction: row;
-            justify-content: center;
-            gap: 30px;
-            padding: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .nav-link {
-            font-size: 12px;
-            padding: 10px 15px;
-            letter-spacing: 2px;
-        }
-
-        .nav-link::before {
-            display: none;
-        }
-
-        .nav-link:hover {
-            transform: translateY(-3px);
-        }
-
-        .content-panel {
-            flex: 1;
-            min-height: 500px;
-            border-radius: 30px;
-        }
-    }
-
-    @media (max-width: 500px) {
-        :root {
-            --border-size: 18px;
-        }
-
-        .nav-link {
-            font-size: 10px;
-            padding: 8px 10px;
-        }
-
-        .nav-container {
-            gap: 15px;
-        }
-    }
-  </style>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/homepage.css">
 </head>
 <body>
+
 <div class="border-frame"></div>
 
-<!-- Border Toggle Controls -->
 <div class="border-controls left-bottom">
-  <div class="toggle-option active" data-toggle="theme" data-value="dark">
-    <span class="toggle-box"></span>
-    <span class="toggle-label">Dark</span>
-  </div>
-  <div class="toggle-option" data-toggle="theme" data-value="light">
-    <span class="toggle-box"></span>
-    <span class="toggle-label">Light</span>
-  </div>
+    <div class="toggle-option active" data-toggle="theme" data-value="dark">
+        <span class="toggle-box"></span>
+        <span class="toggle-label">Dark</span>
+    </div>
+    <div class="toggle-option" data-toggle="theme" data-value="light">
+        <span class="toggle-box"></span>
+        <span class="toggle-label">Light</span>
+    </div>
 </div>
 
 <div class="border-controls right-bottom">
-  <div class="toggle-option active" data-toggle="cursor" data-value="pointer">
-    <span class="toggle-label">Pointer</span>
-    <span class="toggle-box"></span>
-  </div>
-  <div class="toggle-option" data-toggle="cursor" data-value="hand">
-    <span class="toggle-label">Hand</span>
-    <span class="toggle-box"></span>
-  </div>
+    <div class="toggle-option active" data-toggle="cursor" data-value="pointer">
+        <span class="toggle-label">Pointer</span>
+        <span class="toggle-box"></span>
+    </div>
+    <div class="toggle-option" data-toggle="cursor" data-value="hand">
+        <span class="toggle-label">Hand</span>
+        <span class="toggle-box"></span>
+    </div>
 </div>
 
 <div class="border-controls top-center">
-  <div class="toggle-option active" data-toggle="mode" data-value="professional">
-    <span class="toggle-box"></span>
-    <span class="toggle-label">Professional</span>
-  </div>
-  <div class="toggle-option" data-toggle="mode" data-value="personal">
-    <span class="toggle-box"></span>
-    <span class="toggle-label">Personal</span>
-  </div>
+    <div class="toggle-option active" data-toggle="mode" data-value="professional">
+        <span class="toggle-box"></span>
+        <span class="toggle-label">Professional</span>
+    </div>
+    <div class="toggle-option" data-toggle="mode" data-value="personal">
+        <span class="toggle-box"></span>
+        <span class="toggle-label">Personal</span>
+    </div>
 </div>
 
 <div class="cursor"></div>
 <div class="cursor-ring"></div>
-
 <div class="cursor-particle"></div>
 <div class="cursor-particle"></div>
 <div class="cursor-particle"></div>
@@ -416,433 +59,39 @@
 <div class="cursor-particle"></div>
 
 <div class="inner-wrapper">
-  <div class="container">
-    <nav class="nav-container">
-      <a href="#about" class="nav-link" data-text="About">About</a>
-      <a href="#skills" class="nav-link" data-text="Skills">Skills</a>
-      <a href="#work" class="nav-link" data-text="Work Experience">Work Experience</a>
-      <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
-    </nav>
+    <div class="container">
+        <div class="left-section">
+            <p class="tagline">I design digital experiences that look simple and work hard.</p>
 
-    <div class="content-panel">
-      <canvas id="grain-canvas"></canvas>
+            <nav class="nav-container">
+                <a href="#about" class="nav-link" data-text="About">About</a>
+                <a href="#skills" class="nav-link" data-text="Skills">Skills</a>
+                <a href="#work" class="nav-link" data-text="Work Experience">Work Experience</a>
+                <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
+            </nav>
+        </div>
+
+        <div class="content-panel">
+            <canvas id="grain-canvas"></canvas>
+        </div>
     </div>
-  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/text-scramble.js"></script>
+<script src="js/grain-shader.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/toggles.js"></script>
+
 <script>
-  // ============================================
-  // THEME MANAGEMENT
-  // ============================================
-  let currentTheme = 'dark';
-
-  function setTheme(theme) {
-      currentTheme = theme;
-      document.documentElement.setAttribute('data-theme', theme);
-
-      // Update shader uniforms for grain effect
-      // Now dark = 1.0 (light grain), light = 0.0 (dark grain)
-      if (material) {
-          material.uniforms.uTheme.value = theme === 'dark' ? 1.0 : 0.0;
-      }
-  }
-
-  // ============================================
-  // TEXT SCRAMBLE / DECRYPT EFFECT (CRYPTOGRAPHY STYLE)
-  // ============================================
-  class TextScramble {
-      constructor(el) {
-          this.el = el;
-          this.chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
-          this.update = this.update.bind(this);
-      }
-
-      setText(newText) {
-          const oldText = this.el.innerText;
-          const length = Math.max(oldText.length, newText.length);
-          const promise = new Promise(resolve => this.resolve = resolve);
-          this.queue = [];
-
-          for (let i = 0; i < length; i++) {
-              const from = oldText[i] || '';
-              const to = newText[i] || '';
-              const start = i * 3;
-              const end = start + 25 + Math.floor(Math.random() * 15);
-              this.queue.push({ from, to, start, end });
-          }
-
-          cancelAnimationFrame(this.frameRequest);
-          this.frame = 0;
-          this.update();
-          return promise;
-      }
-
-      update() {
-          let output = '';
-          let complete = 0;
-
-          for (let i = 0; i < this.queue.length; i++) {
-              let { from, to, start, end, char } = this.queue[i];
-
-              if (this.frame >= end) {
-                  complete++;
-                  output += `<span class="letter">${to}</span>`;
-              } else if (this.frame >= start) {
-                  if (!char || Math.random() < 0.2) {
-                      char = this.randomChar();
-                      this.queue[i].char = char;
-                  }
-                  const progress = (this.frame - start) / (end - start);
-                  const opacity = 0.5 + (progress * 0.5);
-                  output += `<span class="letter" style="opacity: ${opacity}">${char}</span>`;
-              } else {
-                  output += `<span class="letter">${from}</span>`;
-              }
-          }
-
-          this.el.innerHTML = output;
-
-          if (complete === this.queue.length) {
-              this.resolve();
-          } else {
-              this.frameRequest = requestAnimationFrame(this.update);
-              this.frame++;
-          }
-      }
-
-      randomChar() {
-          return this.chars[Math.floor(Math.random() * this.chars.length)];
-      }
-  }
-
-  // Initialize text scramble for nav links
-  const navLinks = document.querySelectorAll('.nav-link');
-  const scrambleInstances = [];
-
-  navLinks.forEach((link, index) => {
-      const text = link.dataset.text;
-      const scramble = new TextScramble(link);
-      scrambleInstances.push({ scramble, text });
-
-      link.innerHTML = text.split('').map(char =>
-          char === ' ' ? ' ' : `<span class="letter">${char}</span>`
-      ).join('');
-  });
-
-  navLinks.forEach((link, index) => {
-      link.addEventListener('mouseenter', () => {
-          scrambleInstances[index].scramble.setText(scrambleInstances[index].text);
-      });
-  });
-
-  // ============================================
-  // ENHANCED CURSOR SYSTEM
-  // ============================================
-  const cursor = document.querySelector('.cursor');
-  const cursorRing = document.querySelector('.cursor-ring');
-  const cursorParticles = document.querySelectorAll('.cursor-particle');
-
-  let mouseX = 0, mouseY = 0;
-  let cursorX = 0, cursorY = 0;
-  let ringX = 0, ringY = 0;
-  let particlePositions = Array(5).fill().map(() => ({ x: 0, y: 0 }));
-
-  document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-  });
-
-  function animateCursor() {
-      cursorX += (mouseX - cursorX) * 0.15;
-      cursorY += (mouseY - cursorY) * 0.15;
-      cursor.style.left = cursorX + 'px';
-      cursor.style.top = cursorY + 'px';
-
-      ringX += (mouseX - ringX) * 0.08;
-      ringY += (mouseY - ringY) * 0.08;
-      cursorRing.style.left = ringX + 'px';
-      cursorRing.style.top = ringY + 'px';
-
-      cursorParticles.forEach((particle, i) => {
-          const delay = (i + 1) * 0.05;
-          particlePositions[i].x += (mouseX - particlePositions[i].x) * delay;
-          particlePositions[i].y += (mouseY - particlePositions[i].y) * delay;
-
-          particle.style.left = particlePositions[i].x + 'px';
-          particle.style.top = particlePositions[i].y + 'px';
-          particle.style.opacity = 0.25 - (i * 0.04);
-          particle.style.transform = `translate(-50%, -50%) scale(${1 - i * 0.15})`;
-      });
-
-      requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-
-  navLinks.forEach(link => {
-      link.addEventListener('mouseenter', () => {
-          cursor.classList.add('hover');
-          cursorRing.classList.add('hover');
-      });
-      link.addEventListener('mouseleave', () => {
-          cursor.classList.remove('hover');
-          cursorRing.classList.remove('hover');
-      });
-  });
-
-  document.addEventListener('mouseleave', () => {
-      cursor.style.opacity = '0';
-      cursorRing.style.opacity = '0';
-      cursorParticles.forEach(p => p.style.opacity = '0');
-  });
-
-  document.addEventListener('mouseenter', () => {
-      cursor.style.opacity = '1';
-      cursorRing.style.opacity = '0.5';
-  });
-
-  // ============================================
-  // THREE.JS WEBGL GRAIN EFFECT WITH THEME SUPPORT
-  // ============================================
-  const canvas = document.getElementById('grain-canvas');
-  const panel = document.querySelector('.content-panel');
-
-  let scene, camera, renderer, material;
-  let mouse = { x: 0.7, y: 0.3 };
-  let targetMouse = { x: 0.7, y: 0.3 };
-
-  const vertexShader = `
-      varying vec2 vUv;
-      void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-  `;
-
-  const fragmentShader = `
-      uniform float uTime;
-      uniform vec2 uResolution;
-      uniform vec2 uMouse;
-      uniform float uTheme;
-      varying vec2 vUv;
-
-      float hash(vec2 p) {
-          p = fract(p * vec2(234.34, 435.345));
-          p += dot(p, p + 34.23);
-          return fract(p.x * p.y);
-      }
-
-      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-      vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-      vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
-
-      float snoise(vec2 v) {
-          const vec4 C = vec4(0.211324865405187, 0.366025403784439,
-                             -0.577350269189626, 0.024390243902439);
-          vec2 i  = floor(v + dot(v, C.yy));
-          vec2 x0 = v - i + dot(i, C.xx);
-          vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-          vec4 x12 = x0.xyxy + C.xxzz;
-          x12.xy -= i1;
-          i = mod289(i);
-          vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
-          vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
-          m = m*m;
-          m = m*m;
-          vec3 x = 2.0 * fract(p * C.www) - 1.0;
-          vec3 h = abs(x) - 0.5;
-          vec3 ox = floor(x + 0.5);
-          vec3 a0 = x - ox;
-          m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
-          vec3 g;
-          g.x = a0.x * x0.x + h.x * x0.y;
-          g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-          return 130.0 * dot(m, g);
-      }
-
-      float fbm(vec2 p) {
-          float value = 0.0;
-          float amplitude = 0.5;
-          for (int i = 0; i < 5; i++) {
-              value += amplitude * snoise(p);
-              amplitude *= 0.5;
-              p *= 2.0;
-          }
-          return value;
-      }
-
-      void main() {
-          vec2 uv = vUv;
-          float time = uTime * 0.08;
-
-          vec2 flow;
-          flow.x = fbm(uv * 2.0 + time * 0.5);
-          flow.y = fbm(uv * 2.0 + vec2(5.0, 3.0) + time * 0.4);
-
-          vec2 distortedUV = uv + flow * 0.03;
-
-          float grainScale1 = 350.0;
-          float grainScale2 = 500.0;
-          float grainScale3 = 250.0;
-
-          vec2 grainUV1 = distortedUV * grainScale1 + time * 15.0;
-          vec2 grainUV2 = distortedUV * grainScale2 - time * 12.0;
-          vec2 grainUV3 = distortedUV * grainScale3 + vec2(time * 8.0, -time * 10.0);
-
-          float grain1 = hash(floor(grainUV1));
-          float grain2 = hash(floor(grainUV2));
-          float grain3 = hash(floor(grainUV3));
-
-          float threshold1 = 0.75;
-          float threshold2 = 0.78;
-          float threshold3 = 0.72;
-
-          grain1 = grain1 > threshold1 ? 1.0 : 0.0;
-          grain2 = grain2 > threshold2 ? 1.0 : 0.0;
-          grain3 = grain3 > threshold3 ? 1.0 : 0.0;
-
-          float grain = max(max(grain1 * 0.7, grain2 * 0.5), grain3 * 0.6);
-
-          float density = fbm(uv * 3.0 + time * 0.3) * 0.5 + 0.5;
-          density = smoothstep(0.2, 0.8, density);
-
-          vec2 aspect = vec2(uResolution.x / uResolution.y, 1.0);
-          float mouseDist = distance(uv * aspect, uMouse * aspect);
-          float light = smoothstep(0.7, 0.0, mouseDist);
-          light = pow(light, 1.5);
-
-          float particleDensity = density * 0.6 + 0.4;
-          grain *= particleDensity;
-
-          // DARK MODE (uTheme = 1.0): Light base, dark grain particles, cursor reveals darker areas
-          float darkBase = 0.92;
-          float darkGrain = grain * (0.3 + light * 0.5);
-          float darkFlow = density * 0.1;
-          float darkDark = light * 0.35;
-          float darkBrightness = darkBase - darkGrain - darkFlow - darkDark;
-
-          // LIGHT MODE (uTheme = 0.0): Dark base, light grain particles, cursor reveals lighter areas
-          float lightBase = 0.03;
-          float lightGrain = grain * (0.25 + light * 0.35);
-          float lightFlow = density * 0.08;
-          float lightLight = light * 0.15;
-          float lightBrightness = lightBase + lightGrain + lightFlow + lightLight;
-
-          // Mix between light and dark mode (uTheme: 0=light mode, 1=dark mode)
-          float brightness = mix(lightBrightness, darkBrightness, uTheme);
-          brightness = clamp(brightness, 0.0, 1.0);
-
-          // Color with slight warmth
-          vec3 lightColor = vec3(brightness * 0.95, brightness * 0.97, brightness);
-          vec3 darkColor = vec3(brightness * 1.0, brightness * 0.98, brightness * 0.94);
-
-          vec3 color = mix(lightColor, darkColor, uTheme);
-
-          // Subtle color tint on cursor hover
-          color += mix(
-              light * vec3(0.02, 0.03, 0.05),
-              -light * vec3(0.04, 0.03, 0.01),
-              uTheme
-          );
-
-          gl_FragColor = vec4(color, 1.0);
-      }
-  `;
-
-  function init() {
-      scene = new THREE.Scene();
-      camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-      renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false });
-      renderer.setSize(panel.offsetWidth, panel.offsetHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      material = new THREE.ShaderMaterial({
-          vertexShader: vertexShader,
-          fragmentShader: fragmentShader,
-          uniforms: {
-              uTime: { value: 0 },
-              uResolution: { value: new THREE.Vector2(panel.offsetWidth, panel.offsetHeight) },
-              uMouse: { value: new THREE.Vector2(0.7, 0.3) },
-              uTheme: { value: 1.0 }
-          }
-      });
-
-      const geometry = new THREE.PlaneGeometry(2, 2);
-      const mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
-  }
-
-  function animate() {
-      requestAnimationFrame(animate);
-
-      mouse.x += (targetMouse.x - mouse.x) * 0.015;
-      mouse.y += (targetMouse.y - mouse.y) * 0.015;
-
-      material.uniforms.uTime.value += 0.016;
-      material.uniforms.uMouse.value.set(mouse.x, mouse.y);
-
-      renderer.render(scene, camera);
-  }
-
-  function onResize() {
-      renderer.setSize(panel.offsetWidth, panel.offsetHeight);
-      material.uniforms.uResolution.value.set(panel.offsetWidth, panel.offsetHeight);
-  }
-
-  panel.addEventListener('mousemove', (e) => {
-      const rect = panel.getBoundingClientRect();
-      targetMouse.x = (e.clientX - rect.left) / rect.width;
-      targetMouse.y = 1.0 - (e.clientY - rect.top) / rect.height;
-  });
-
-  panel.addEventListener('mouseleave', () => {
-      targetMouse.x = 0.7;
-      targetMouse.y = 0.3;
-  });
-
-  init();
-  animate();
-  window.addEventListener('resize', onResize);
-
-  // ============================================
-  // TOGGLE CONTROLS FUNCTIONALITY
-  // ============================================
-  const toggleOptions = document.querySelectorAll('.toggle-option');
-
-  toggleOptions.forEach(option => {
-      option.addEventListener('click', () => {
-          const toggleGroup = option.dataset.toggle;
-          const value = option.dataset.value;
-
-          // Remove active from siblings in same group
-          document.querySelectorAll(`[data-toggle="${toggleGroup}"]`).forEach(opt => {
-              opt.classList.remove('active');
-          });
-
-          // Add active to clicked option
-          option.classList.add('active');
-
-          // Handle toggle actions
-          if (toggleGroup === 'theme') {
-              setTheme(value);
-          } else if (toggleGroup === 'cursor') {
-              if (value === 'hand') {
-                  document.body.style.cursor = 'pointer';
-                  cursor.style.display = 'none';
-                  cursorRing.style.display = 'none';
-                  cursorParticles.forEach(p => p.style.display = 'none');
-              } else {
-                  document.body.style.cursor = 'none';
-                  cursor.style.display = 'block';
-                  cursorRing.style.display = 'block';
-                  cursorParticles.forEach(p => p.style.display = 'block');
-              }
-          } else if (toggleGroup === 'mode') {
-              console.log('Mode:', value);
-          }
-      });
-  });
+    Cursor.init({ hoverElements: '.nav-link' });
+    initNavScramble();
+
+    const shaderMaterial = GrainShader.init('grain-canvas', '.content-panel');
+    Theme.init(shaderMaterial);
+    Toggles.init();
 </script>
+
 </body>
 </html>
