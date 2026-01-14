@@ -1,43 +1,32 @@
 /* hand control styles */
 
-.hand-indicator {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 160px;
-    height: 120px;
-    border-radius: 12px;
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-    z-index: 9990;
-    opacity: 0;
-    transform: translateY(20px) scale(0.9);
-    transition: all 0.4s var(--ease-smooth);
-    pointer-events: none;
+/* camera preview - top right */
+#hand-preview {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.hand-indicator.active {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+/* gesture indicator */
+#gesture-indicator {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-.hand-indicator::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.05) 0%,
-        transparent 50%
-    );
-    pointer-events: none;
+/* cursor click animation */
+.cursor.clicking {
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: transform 0.1s ease;
+}
+
+.cursor-ring.clicking {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0 !important;
+    transition: all 0.2s ease;
 }
 
 /* status badge */
 .hand-status {
     position: fixed;
-    bottom: 150px;
+    top: 220px;
     right: 20px;
     padding: 8px 14px;
     background: rgba(0, 0, 0, 0.7);
@@ -55,6 +44,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .hand-status.active {
@@ -84,45 +75,14 @@
     50% { opacity: 0.5; transform: scale(0.8); }
 }
 
-/* scroll feedback */
-.hand-scroll-indicator {
-    position: fixed;
-    right: 50px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    z-index: 9989;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.hand-scroll-indicator.active {
-    opacity: 1;
-}
-
-.hand-scroll-track {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 30px;
-    background: var(--white);
-    border-radius: 2px;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: top 0.1s ease-out;
-}
-
 /* gesture hints */
 .hand-hints {
     position: fixed;
-    bottom: 20px;
-    right: 200px;
+    top: 260px;
+    right: 20px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     z-index: 9988;
     opacity: 0;
     transform: translateX(20px);
@@ -137,22 +97,24 @@
 .hand-hint {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 6px 12px;
+    gap: 8px;
+    padding: 5px 10px;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 6px;
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.5);
     white-space: nowrap;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .hand-hint-icon {
-    font-size: 14px;
+    font-size: 12px;
 }
 
-/* permission prompt */
+/* permission modal */
 .hand-permission {
     position: fixed;
     inset: 0;
@@ -165,6 +127,8 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.4s ease;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
 .hand-permission.active {
@@ -174,35 +138,72 @@
 
 .hand-permission-content {
     text-align: center;
-    max-width: 400px;
+    max-width: 450px;
     padding: 40px;
 }
 
 .hand-permission-icon {
-    font-size: 48px;
+    font-size: 64px;
     margin-bottom: 24px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .hand-permission-title {
     font-family: var(--font-display);
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--white);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     letter-spacing: 1px;
 }
 
 .hand-permission-text {
     font-family: var(--font-mono);
     font-size: 12px;
-    line-height: 1.8;
+    line-height: 2;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 32px;
     letter-spacing: 0.5px;
 }
 
+.hand-permission-gestures {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.hand-permission-gesture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hand-permission-gesture-icon {
+    font-size: 24px;
+}
+
+.hand-permission-gesture-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+
 .hand-permission-btn {
-    padding: 14px 32px;
+    padding: 16px 40px;
     background: var(--white);
     color: var(--black);
     border: none;
@@ -218,7 +219,7 @@
 
 .hand-permission-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
 }
 
 .hand-permission-skip {
@@ -238,9 +239,14 @@
 }
 
 /* light theme adjustments */
-[data-theme="light"] .hand-indicator {
+[data-theme="light"] #hand-preview {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] #gesture-indicator {
     background: rgba(255, 255, 255, 0.9);
     border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.8);
 }
 
 [data-theme="light"] .hand-status {
@@ -249,39 +255,42 @@
     color: rgba(0, 0, 0, 0.7);
 }
 
-[data-theme="light"] .hand-scroll-indicator {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .hand-scroll-track {
-    background: var(--black);
-}
-
-[data-theme="light"] .hand-hints {
-    background: rgba(255, 255, 255, 0.8);
-}
-
 [data-theme="light"] .hand-hint {
     background: rgba(255, 255, 255, 0.9);
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.5);
 }
 
 /* responsive */
 @media (max-width: 900px) {
-    .hand-indicator {
-        width: 120px;
-        height: 90px;
-        bottom: 15px;
-        right: 15px;
+    #hand-preview {
+        width: 120px !important;
+        height: 90px !important;
+        top: 40px !important;
+        right: 10px !important;
+    }
+
+    #gesture-indicator {
+        top: 140px !important;
+        right: 10px !important;
+        font-size: 9px !important;
+        padding: 6px 12px !important;
     }
 
     .hand-status {
-        bottom: 115px;
-        right: 15px;
+        top: 180px;
+        right: 10px;
         font-size: 8px;
     }
 
     .hand-hints {
         display: none;
+    }
+
+    .hand-permission-gestures {
+        gap: 10px;
+    }
+
+    .hand-permission-gesture {
+        padding: 8px 12px;
     }
 }
