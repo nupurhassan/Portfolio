@@ -1,0 +1,287 @@
+/* hand control styles */
+
+.hand-indicator {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 160px;
+    height: 120px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    z-index: 9990;
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    transition: all 0.4s var(--ease-smooth);
+    pointer-events: none;
+}
+
+.hand-indicator.active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.hand-indicator::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 50%
+    );
+    pointer-events: none;
+}
+
+/* status badge */
+.hand-status {
+    position: fixed;
+    bottom: 150px;
+    right: 20px;
+    padding: 8px 14px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    z-index: 9991;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hand-status.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hand-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.hand-status.detecting .hand-status-dot {
+    background: #fbbf24;
+}
+
+.hand-status.error .hand-status-dot {
+    background: #f87171;
+    animation: none;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* scroll feedback */
+.hand-scroll-indicator {
+    position: fixed;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    z-index: 9989;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.hand-scroll-indicator.active {
+    opacity: 1;
+}
+
+.hand-scroll-track {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background: var(--white);
+    border-radius: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: top 0.1s ease-out;
+}
+
+/* gesture hints */
+.hand-hints {
+    position: fixed;
+    bottom: 20px;
+    right: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 9988;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.4s var(--ease-smooth) 0.1s;
+}
+
+.hand-hints.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hand-hint {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.6);
+    white-space: nowrap;
+}
+
+.hand-hint-icon {
+    font-size: 14px;
+}
+
+/* permission prompt */
+.hand-permission {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+.hand-permission.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hand-permission-content {
+    text-align: center;
+    max-width: 400px;
+    padding: 40px;
+}
+
+.hand-permission-icon {
+    font-size: 48px;
+    margin-bottom: 24px;
+}
+
+.hand-permission-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.hand-permission-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 32px;
+    letter-spacing: 0.5px;
+}
+
+.hand-permission-btn {
+    padding: 14px 32px;
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    border-radius: 30px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hand-permission-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+
+.hand-permission-skip {
+    margin-top: 20px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.hand-permission-skip:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* light theme adjustments */
+[data-theme="light"] .hand-indicator {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .hand-status {
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="light"] .hand-scroll-indicator {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .hand-scroll-track {
+    background: var(--black);
+}
+
+[data-theme="light"] .hand-hints {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] .hand-hint {
+    background: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* responsive */
+@media (max-width: 900px) {
+    .hand-indicator {
+        width: 120px;
+        height: 90px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .hand-status {
+        bottom: 115px;
+        right: 15px;
+        font-size: 8px;
+    }
+
+    .hand-hints {
+        display: none;
+    }
+}

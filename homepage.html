@@ -9,9 +9,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
+    <!-- MediaPipe Scripts (loaded in head for availability) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/hand-control.css">
 </head>
 <body>
 
@@ -83,14 +90,24 @@
 <script src="js/grain-shader.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/toggles.js"></script>
+<script src="js/hand-control.js"></script>
+<script src="js/hand-control-ui.js"></script>
 
 <script>
+    // initialize core modules
     Cursor.init({ hoverElements: '.nav-link' });
     initNavScramble();
 
     const shaderMaterial = GrainShader.init('grain-canvas', '.content-panel');
     Theme.init(shaderMaterial);
     Toggles.init();
+
+    // initialize hand control (MediaPipe already loaded via CDN in head)
+    HandControlUI.init().then(() => {
+        console.log('Hand control ready');
+    }).catch(err => {
+        console.error('Hand control init failed:', err);
+    });
 </script>
 
 </body>
