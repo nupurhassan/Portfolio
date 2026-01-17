@@ -48,53 +48,17 @@ body {
 .tagline {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 48px;
-    line-height: 1.35;
+    font-size: 45px;
+    line-height: 1.40;
     color: var(--nav-text);
-    opacity: 0;
-    max-width: 420px;
+    opacity: 0.3;
+    max-width: 380px;
     margin-bottom: 50px;
     letter-spacing: 0.5px;
-    transition: color var(--transition-speed) ease;
-    animation: taglineFadeIn 1.2s ease-out 0.3s forwards;
+    transition: color var(--transition-speed) ease, opacity 0.3s ease;
 }
 
-@keyframes taglineFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.tagline:hover { opacity: 0.9; }
-
-/* Emphasis words styling */
-.tagline .emphasis {
-    color: var(--nav-text);
-    opacity: 1;
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-.tagline .emphasis::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--nav-text);
-    opacity: 0.4;
-    transition: width 0.4s ease;
-}
-
-.tagline:hover .emphasis::after {
-    width: 100%;
-}
+.tagline:hover { opacity: 1; }
 
 
 .nav-container {
@@ -105,7 +69,6 @@ body {
     margin-left: 30px;
 }
 
-/* IMPROVED: Larger hit areas (Fitts's Law) */
 .nav-link {
     font-family: var(--font-display);
     font-weight: 700;
@@ -114,12 +77,10 @@ body {
     color: var(--nav-text);
     text-decoration: none;
     text-transform: uppercase;
-    padding: 22px 20px 22px 0;
-    margin-left: -4px;
+    padding: 22px 0;
     position: relative;
     display: inline-block;
     transition: all 0.4s var(--ease-smooth), color var(--transition-speed) ease;
-    border-radius: 4px;
 }
 
 .nav-link .letter {
@@ -127,21 +88,8 @@ body {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* IMPROVED: Aesthetic-Usability Effect - subtle depth on hover */
 .nav-link:hover {
     transform: translateX(10px);
-    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="light"] .nav-link:hover {
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* IMPROVED: Focus states for keyboard navigation (Accessibility) */
-.nav-link:focus-visible {
-    outline: 2px solid var(--nav-text);
-    outline-offset: 4px;
-    border-radius: 2px;
 }
 
 
@@ -165,21 +113,6 @@ body {
         inset 0 0 100px rgba(0, 0, 0, 0.05);
 }
 
-/* IMPROVED: Law of Prägnanz - vignette to guide focus */
-.content-panel::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 40px;
-    box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.25);
-    pointer-events: none;
-    z-index: 2;
-}
-
-[data-theme="light"] .content-panel::after {
-    box-shadow: inset 0 0 120px rgba(255, 255, 255, 0.2);
-}
-
 #grain-canvas {
     position: absolute;
     inset: 0;
@@ -195,43 +128,34 @@ body {
     z-index: 101;
     display: flex;
     font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 400;
+    font-size: 12px;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--toggle-text);
     transition: color var(--transition-speed) ease;
 }
 
-/* FIXED: Centered vertically like top toggles */
 .border-controls.left-bottom {
-    left: 0;
-    width: var(--border-size);
-    top: 80%;
-    transform: rotate(180deg) translateY(50%);
+    left: 10px;
+    bottom: 20px;
     writing-mode: vertical-rl;
     text-orientation: mixed;
+    transform: rotate(180deg);
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 30px;
+    gap: 15px;
 }
 
-/* FIXED: Centered vertically like top toggles */
 .border-controls.right-bottom {
-    right: 0;
-    width: var(--border-size);
-    top: 78%;
-    transform: translateY(-50%);
+    right: 10px;
+    bottom: 20px;
     writing-mode: vertical-lr;
     text-orientation: mixed;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 30px;
+    gap: 15px;
 }
 
-/* IMPROVED: Miller's Law - add label to group toggles */
 .border-controls.top-center {
     top: 0;
     height: var(--border-size);
@@ -241,48 +165,20 @@ body {
     align-items: center;
     justify-content: center;
     gap: 25px;
-    position: relative;
-}
-
-.mode-label {
-    position: absolute;
-    top: 50%;
-    left: -60px;
-    transform: translateY(-50%);
-    font-size: 9px;
-    letter-spacing: 3px;
-    opacity: 0.4;
-    pointer-events: none;
 }
 
 
-/* IMPROVED: Better hover feedback and visual grouping */
 .toggle-option {
     display: inline-flex;
     align-items: center;
     gap: 4px;
     cursor: pointer;
-    padding: 6px 10px;
-    border-radius: 4px;
-    transition: color 0.3s ease, background 0.2s ease;
+    transition: color 0.3s ease;
     white-space: nowrap;
 }
 
-.toggle-option:hover {
-    color: var(--toggle-text-active);
-    background: rgba(128, 128, 128, 0.1);
-}
-
-.toggle-option.active {
-    color: var(--toggle-text-active);
-}
-
-/* IMPROVED: Focus states for keyboard navigation (Accessibility) */
-.toggle-option:focus-visible {
-    outline: 2px solid var(--toggle-text-active);
-    outline-offset: 2px;
-    border-radius: 4px;
-}
+.toggle-option:hover { color: var(--toggle-text-active); }
+.toggle-option.active { color: var(--toggle-text-active); }
 
 .toggle-box {
     width: 0;
@@ -317,44 +213,24 @@ body {
 }
 
 
-/* IMPROVED: Postel's Law - respect reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-
-    .nav-link:hover {
-        transform: none;
-        text-shadow: none;
-    }
-
-    .content-panel::after {
-        box-shadow: none;
-    }
-}
-
-
-/* IMPROVED: Better mobile touch targets (44px minimum) */
 @media (max-width: 900px) {
     .container {
         flex-direction: column;
         padding: 20px;
+        overflow-y: auto;
     }
 
     .left-section {
         width: 100%;
         padding-left: 20px;
         height: auto;
+        flex-shrink: 0;
         justify-content: flex-start;
         padding-top: 40px;
     }
 
     .tagline {
-        font-size: 32px;
+        font-size: 24px;
         max-width: 100%;
         margin-bottom: 40px;
     }
@@ -363,59 +239,33 @@ body {
         width: 100%;
         flex-direction: column;
         gap: 0;
-        margin-left: 0;
     }
 
     .nav-link {
         font-size: 15px;
-        padding: 18px 16px 18px 0;
-        min-height: 44px;
+        padding: 15px 0;
         letter-spacing: 3px;
-        display: flex;
-        align-items: center;
     }
 
     .nav-link::before { display: none; }
     .nav-link:hover { transform: translateX(10px); }
 
     .content-panel {
-        flex: 1;
-        min-height: 400px;
+        flex: 0 0 auto;
+        width: 100%;
+        min-height: 300px;
+        height: 40vh;
         border-radius: 30px;
         margin-top: 40px;
-    }
-
-    .content-panel::after {
-        border-radius: 30px;
-    }
-
-    .toggle-option {
-        padding: 10px 12px;
-        min-height: 44px;
-    }
-
-    .border-controls.left-bottom,
-    .border-controls.right-bottom {
-        bottom: 40px;
-        gap: 20px;
-    }
-
-    .mode-label {
-        display: none;
+        margin-bottom: 20px;
     }
 }
 
 @media (max-width: 500px) {
-    .tagline { font-size: 26px; }
+    .tagline { font-size: 20px; }
 
     .nav-link {
         font-size: 14px;
-        padding: 16px 12px 16px 0;
-        min-height: 44px;
-    }
-
-    .toggle-option {
-        padding: 10px;
-        min-height: 44px;
+        padding: 12px 0;
     }
 }

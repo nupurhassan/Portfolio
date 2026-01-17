@@ -46,9 +46,7 @@
     </div>
 </div>
 
-<!-- IMPROVED: Miller's Law - added label to group toggles -->
 <div class="border-controls top-center">
-    <span class="mode-label">View</span>
     <div class="toggle-option active" data-toggle="mode" data-value="professional" tabindex="0" role="button" aria-pressed="true">
         <span class="toggle-box"></span>
         <span class="toggle-label">Professional</span>
@@ -72,7 +70,6 @@
         <div class="left-section">
             <p class="tagline">I design digital experiences that look <span class="emphasis">simple</span> and work <span class="emphasis">hard</span>.</p>
 
-            <!-- IMPROVED: Serial Position Effect - reordered for primacy & recency -->
             <nav class="nav-container">
                 <a href="#work" class="nav-link" data-text="Work">Work</a>
                 <a href="#about" class="nav-link" data-text="About">About</a>
@@ -105,7 +102,7 @@
     Theme.init(shaderMaterial);
     Toggles.init();
 
-    // IMPROVED: Add keyboard support for toggles (Accessibility)
+    // Add keyboard support for toggles (Accessibility)
     document.querySelectorAll('.toggle-option').forEach(option => {
         option.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
