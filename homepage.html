@@ -25,33 +25,35 @@
 <div class="border-frame"></div>
 
 <div class="border-controls left-bottom">
-    <div class="toggle-option active" data-toggle="theme" data-value="dark">
+    <div class="toggle-option active" data-toggle="theme" data-value="dark" tabindex="0" role="button" aria-pressed="true">
         <span class="toggle-box"></span>
         <span class="toggle-label">Dark</span>
     </div>
-    <div class="toggle-option" data-toggle="theme" data-value="light">
+    <div class="toggle-option" data-toggle="theme" data-value="light" tabindex="0" role="button" aria-pressed="false">
         <span class="toggle-box"></span>
         <span class="toggle-label">Light</span>
     </div>
 </div>
 
 <div class="border-controls right-bottom">
-    <div class="toggle-option active" data-toggle="cursor" data-value="pointer">
+    <div class="toggle-option active" data-toggle="cursor" data-value="pointer" tabindex="0" role="button" aria-pressed="true">
         <span class="toggle-label">Pointer</span>
         <span class="toggle-box"></span>
     </div>
-    <div class="toggle-option" data-toggle="cursor" data-value="hand">
+    <div class="toggle-option" data-toggle="cursor" data-value="hand" tabindex="0" role="button" aria-pressed="false">
         <span class="toggle-label">Hand</span>
         <span class="toggle-box"></span>
     </div>
 </div>
 
+<!-- IMPROVED: Miller's Law - added label to group toggles -->
 <div class="border-controls top-center">
-    <div class="toggle-option active" data-toggle="mode" data-value="professional">
+    <span class="mode-label">View</span>
+    <div class="toggle-option active" data-toggle="mode" data-value="professional" tabindex="0" role="button" aria-pressed="true">
         <span class="toggle-box"></span>
         <span class="toggle-label">Professional</span>
     </div>
-    <div class="toggle-option" data-toggle="mode" data-value="personal">
+    <div class="toggle-option" data-toggle="mode" data-value="personal" tabindex="0" role="button" aria-pressed="false">
         <span class="toggle-box"></span>
         <span class="toggle-label">Personal</span>
     </div>
@@ -68,12 +70,13 @@
 <div class="inner-wrapper">
     <div class="container">
         <div class="left-section">
-            <p class="tagline">I design digital experiences that look simple and work hard.</p>
+            <p class="tagline">I design digital experiences that look <span class="emphasis">simple</span> and work <span class="emphasis">hard</span>.</p>
 
+            <!-- IMPROVED: Serial Position Effect - reordered for primacy & recency -->
             <nav class="nav-container">
+                <a href="#work" class="nav-link" data-text="Work">Work</a>
                 <a href="#about" class="nav-link" data-text="About">About</a>
                 <a href="#skills" class="nav-link" data-text="Skills">Skills</a>
-                <a href="#work" class="nav-link" data-text="Work Experience">Work Experience</a>
                 <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
             </nav>
         </div>
@@ -95,12 +98,22 @@
 
 <script>
     // initialize core modules
-    Cursor.init({ hoverElements: '.nav-link' });
+    Cursor.init({ hoverElements: '.nav-link, .toggle-option' });
     initNavScramble();
 
     const shaderMaterial = GrainShader.init('grain-canvas', '.content-panel');
     Theme.init(shaderMaterial);
     Toggles.init();
+
+    // IMPROVED: Add keyboard support for toggles (Accessibility)
+    document.querySelectorAll('.toggle-option').forEach(option => {
+        option.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                option.click();
+            }
+        });
+    });
 
     // initialize hand control (MediaPipe already loaded via CDN in head)
     HandControlUI.init().then(() => {

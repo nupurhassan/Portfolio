@@ -45,7 +45,7 @@ const Cursor = {
     bindEvents(options = {}) {
         document.addEventListener('mousemove', (e) => {
             if (this.inputSource !== 'mouse') return;
-            
+
             this.mouse.x = e.clientX;
             this.mouse.y = e.clientY;
 
@@ -86,7 +86,7 @@ const Cursor = {
     setInputSource(source) {
         this.inputSource = source;
         console.log('Cursor input:', source);
-        
+
         if (source === 'hand') {
             // show cursor
             if (this.cursor) {
