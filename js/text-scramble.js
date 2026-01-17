@@ -8,6 +8,14 @@ class TextScramble {
     }
 
     setText(newText) {
+        // IMPROVED: Postel's Law - respect reduced motion preferences
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            this.el.innerHTML = newText.split('').map(char =>
+                char === ' ' ? ' ' : `<span class="letter">${char}</span>`
+            ).join('');
+            return Promise.resolve();
+        }
+
         const oldText = this.el.innerText;
         const length = Math.max(oldText.length, newText.length);
         const promise = new Promise(resolve => this.resolve = resolve);
@@ -70,6 +78,9 @@ function initNavScramble() {
     const navLinks = document.querySelectorAll('.nav-link');
     const instances = [];
 
+    // IMPROVED: Postel's Law - check reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     navLinks.forEach((link) => {
         const text = link.dataset.text;
         const scramble = new TextScramble(link);
@@ -80,11 +91,14 @@ function initNavScramble() {
         ).join('');
     });
 
-    navLinks.forEach((link, index) => {
-        link.addEventListener('mouseenter', () => {
-            instances[index].scramble.setText(instances[index].text);
+    // Only add hover effect if user doesn't prefer reduced motion
+    if (!prefersReducedMotion) {
+        navLinks.forEach((link, index) => {
+            link.addEventListener('mouseenter', () => {
+                instances[index].scramble.setText(instances[index].text);
+            });
         });
-    });
+    }
 }
 
 window.TextScramble = TextScramble;

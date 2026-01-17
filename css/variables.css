@@ -8,8 +8,11 @@
     --near-black: #0a0a0a;
     --dark-gray: #1a1a1a;
     --warm-gray: #d4cfc8;
+    --accent: #b8977e;
+    --cherry-red: #dc143c;
+    --burgundy: #800020;
 
-  
+
     --border-size: 40px;
 
 
@@ -31,6 +34,7 @@
 }
 
 
+/* Dark theme */
 [data-theme="dark"] {
     --panel-bg: var(--warm-gray);
     --border-color: var(--off-white);
@@ -44,6 +48,7 @@
 }
 
 
+/* Light theme */
 [data-theme="light"] {
     --panel-bg: var(--dark-gray);
     --border-color: var(--near-black);

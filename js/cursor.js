@@ -1,18 +1,28 @@
-// cursor module
+// cursor module - with hand control support
 
 const Cursor = {
     cursor: null,
     ring: null,
     particles: [],
 
+    // position tracking
     mouse: { x: 0, y: 0 },
     cursorPos: { x: 0, y: 0 },
     ringPos: { x: 0, y: 0 },
     particlePositions: [],
 
+    // input source: 'mouse' or 'hand'
+    inputSource: 'mouse',
+    handPos: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+
+    // trail particles
     particleCount: 0,
     maxParticles: 50,
     lastPos: { x: 0, y: 0 },
+
+    // state
+    isVisible: true,
+    isHovering: false,
 
     init(options = {}) {
         this.cursor = document.querySelector('.cursor');
@@ -23,23 +33,21 @@ const Cursor = {
             this.particlePositions = Array(this.particles.length).fill().map(() => ({ x: 0, y: 0 }));
         }
 
-        this.bindEvents(options);
+        // set initial position
+        this.cursorPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        this.ringPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        this.mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
-        if (this.ring || this.particles.length) {
-            this.animate();
-        }
+        this.bindEvents(options);
+        this.animate();
     },
 
     bindEvents(options = {}) {
         document.addEventListener('mousemove', (e) => {
+            if (this.inputSource !== 'mouse') return;
+
             this.mouse.x = e.clientX;
             this.mouse.y = e.clientY;
-
-            // simple cursor positioning
-            if (!this.ring && this.cursor) {
-                this.cursor.style.left = e.clientX + 'px';
-                this.cursor.style.top = e.clientY + 'px';
-            }
 
             // particle trail
             if (options.trailParticles) {
@@ -48,35 +56,101 @@ const Cursor = {
         });
 
         document.addEventListener('mouseleave', () => {
+            if (this.inputSource !== 'mouse') return;
             if (this.cursor) this.cursor.style.opacity = '0';
             if (this.ring) this.ring.style.opacity = '0';
-            this.particles.forEach(p => p.style.opacity = '0');
         });
 
         document.addEventListener('mouseenter', () => {
+            if (this.inputSource !== 'mouse') return;
             if (this.cursor) this.cursor.style.opacity = '1';
-            if (this.ring) this.ring.style.opacity = '0.5';
+            if (this.ring) this.ring.style.opacity = '0.6';
         });
 
         // hover effects
         if (options.hoverElements) {
             document.querySelectorAll(options.hoverElements).forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    this.cursor?.classList.add('hover');
-                    this.ring?.classList.add('hover');
-                });
-                el.addEventListener('mouseleave', () => {
-                    this.cursor?.classList.remove('hover');
-                    this.ring?.classList.remove('hover');
-                });
+                el.addEventListener('mouseenter', () => this.setHover(true));
+                el.addEventListener('mouseleave', () => this.setHover(false));
             });
         }
     },
 
+    // called by hand control to update position
+    setHandPosition(x, y) {
+        this.handPos.x = x;
+        this.handPos.y = y;
+    },
+
+    // switch input source
+    setInputSource(source) {
+        this.inputSource = source;
+        console.log('Cursor input:', source);
+
+        if (source === 'hand') {
+            // show cursor
+            if (this.cursor) {
+                this.cursor.style.display = 'block';
+                this.cursor.style.opacity = '1';
+            }
+            if (this.ring) {
+                this.ring.style.display = 'block';
+                this.ring.style.opacity = '0.6';
+            }
+            // initialize hand position to center
+            this.handPos.x = window.innerWidth / 2;
+            this.handPos.y = window.innerHeight / 2;
+        } else {
+            // mouse mode - cursor follows mouse
+            if (this.cursor) {
+                this.cursor.style.display = 'block';
+                this.cursor.style.opacity = '1';
+            }
+            if (this.ring) {
+                this.ring.style.display = 'block';
+                this.ring.style.opacity = '0.6';
+            }
+        }
+    },
+
+    // set hover state
+    setHover(hovering) {
+        this.isHovering = hovering;
+        if (hovering) {
+            this.cursor?.classList.add('hover');
+            this.ring?.classList.add('hover');
+        } else {
+            this.cursor?.classList.remove('hover');
+            this.ring?.classList.remove('hover');
+        }
+    },
+
+    // trigger click animation
+    triggerClick() {
+        if (this.cursor) {
+            this.cursor.style.transform = 'translate(-50%, -50%) scale(0.7)';
+            setTimeout(() => {
+                this.cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            }, 150);
+        }
+        if (this.ring) {
+            this.ring.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            this.ring.style.opacity = '0';
+            setTimeout(() => {
+                this.ring.style.transform = 'translate(-50%, -50%) scale(1)';
+                this.ring.style.opacity = '0.6';
+            }, 200);
+        }
+    },
+
     animate() {
+        // get target position based on input source
+        const targetX = this.inputSource === 'hand' ? this.handPos.x : this.mouse.x;
+        const targetY = this.inputSource === 'hand' ? this.handPos.y : this.mouse.y;
+
         // smooth cursor
-        this.cursorPos.x += (this.mouse.x - this.cursorPos.x) * 0.15;
-        this.cursorPos.y += (this.mouse.y - this.cursorPos.y) * 0.15;
+        this.cursorPos.x += (targetX - this.cursorPos.x) * 0.15;
+        this.cursorPos.y += (targetY - this.cursorPos.y) * 0.15;
 
         if (this.cursor) {
             this.cursor.style.left = this.cursorPos.x + 'px';
@@ -84,8 +158,8 @@ const Cursor = {
         }
 
         // slower ring
-        this.ringPos.x += (this.mouse.x - this.ringPos.x) * 0.08;
-        this.ringPos.y += (this.mouse.y - this.ringPos.y) * 0.08;
+        this.ringPos.x += (targetX - this.ringPos.x) * 0.08;
+        this.ringPos.y += (targetY - this.ringPos.y) * 0.08;
 
         if (this.ring) {
             this.ring.style.left = this.ringPos.x + 'px';
@@ -95,8 +169,8 @@ const Cursor = {
         // trailing particles
         this.particles.forEach((particle, i) => {
             const delay = (i + 1) * 0.05;
-            this.particlePositions[i].x += (this.mouse.x - this.particlePositions[i].x) * delay;
-            this.particlePositions[i].y += (this.mouse.y - this.particlePositions[i].y) * delay;
+            this.particlePositions[i].x += (targetX - this.particlePositions[i].x) * delay;
+            this.particlePositions[i].y += (targetY - this.particlePositions[i].y) * delay;
 
             particle.style.left = this.particlePositions[i].x + 'px';
             particle.style.top = this.particlePositions[i].y + 'px';
@@ -144,11 +218,17 @@ const Cursor = {
     },
 
     setVisible(visible) {
+        this.isVisible = visible;
         const display = visible ? 'block' : 'none';
         if (this.cursor) this.cursor.style.display = display;
         if (this.ring) this.ring.style.display = display;
         this.particles.forEach(p => p.style.display = display);
-        document.body.style.cursor = visible ? 'none' : 'pointer';
+        document.body.style.cursor = visible ? 'none' : 'default';
+    },
+
+    // get current cursor position
+    getPosition() {
+        return { x: this.cursorPos.x, y: this.cursorPos.y };
     }
 };
 

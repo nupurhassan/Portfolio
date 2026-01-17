@@ -57,9 +57,20 @@
     gap: 8px;
 }
 
+/* IMPROVED: Attention pulse when first activated (Visibility of System Status) */
 .hand-status.active {
     opacity: 1;
     transform: translateY(0);
+    animation: attention-pulse 2s ease-out;
+}
+
+@keyframes attention-pulse {
+    0% { transform: translateY(0) scale(1); }
+    15% { transform: translateY(-8px) scale(1.08); }
+    30% { transform: translateY(0) scale(1); }
+    45% { transform: translateY(-4px) scale(1.04); }
+    60% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(0) scale(1); }
 }
 
 .hand-status-dot {
@@ -214,11 +225,17 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.3s ease;
+    min-height: 44px;
 }
 
 .hand-permission-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+
+.hand-permission-btn:focus-visible {
+    outline: 2px solid var(--white);
+    outline-offset: 4px;
 }
 
 .hand-permission-skip {
@@ -231,10 +248,18 @@
     letter-spacing: 2px;
     cursor: pointer;
     transition: color 0.3s ease;
+    padding: 12px 20px;
+    min-height: 44px;
 }
 
 .hand-permission-skip:hover {
     color: rgba(255, 255, 255, 0.7);
+}
+
+.hand-permission-skip:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+    border-radius: 4px;
 }
 
 /* light theme adjustments */

@@ -47,6 +47,11 @@
     </div>
 
     <p class="tagline">DREAMER TURNED ARTIST AND DEVELOPER</p>
+
+    <!-- IMPROVED: Skip intro button (User Control) -->
+    <button class="skip-intro" onclick="skipIntro()">
+        Skip <span>→</span>
+    </button>
 </div>
 
 <script src="js/cursor.js"></script>
@@ -54,13 +59,23 @@
     Cursor.init({ trailParticles: true });
 
     const overlay = document.querySelector('.transition-overlay');
+    let redirectTimeout;
 
-    setTimeout(() => {
+    function skipIntro() {
+        clearTimeout(redirectTimeout);
+        overlay.classList.add('active');
+        setTimeout(() => {
+            window.location.href = 'homepage.html';
+        }, 400);
+    }
+
+    // IMPROVED: Reduced from 5000ms to 3000ms (Doherty Threshold)
+    redirectTimeout = setTimeout(() => {
         overlay.classList.add('active');
         setTimeout(() => {
             window.location.href = 'homepage.html';
         }, 800);
-    }, 5000);
+    }, 3000);
 </script>
 
 </body>
