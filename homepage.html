@@ -66,7 +66,10 @@
 <div class="cursor-particle"></div>
 
 <div class="inner-wrapper">
+    <canvas id="blob-canvas"></canvas>
+
     <div class="container">
+
         <div class="left-section">
             <p class="tagline">I design digital experiences that look <span class="emphasis">simple</span> and work <span class="emphasis">hard</span>.</p>
 
@@ -90,6 +93,7 @@
 <script src="js/grain-shader.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/toggles.js"></script>
+<script src="js/blob.js"></script>
 <script src="js/hand-control.js"></script>
 <script src="js/hand-control-ui.js"></script>
 
@@ -101,6 +105,9 @@
     const shaderMaterial = GrainShader.init('grain-canvas', '.content-panel');
     Theme.init(shaderMaterial);
     Toggles.init();
+
+    // initialize blob (behind everything)
+    Blob.init('blob-canvas');
 
     // Add keyboard support for toggles (Accessibility)
     document.querySelectorAll('.toggle-option').forEach(option => {
@@ -118,7 +125,7 @@
     }).catch(err => {
         console.error('Hand control init failed:', err);
     });
-</script>
+</script>F
 
 </body>
 </html>

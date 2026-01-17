@@ -30,6 +30,7 @@ body {
     width: 100%;
     height: 100%;
     display: flex;
+    z-index: 1;
     position: relative;
     padding: 40px;
     gap: 90px;
@@ -119,7 +120,18 @@ body {
     width: 100%;
     height: 100%;
     z-index: 1;
+    pointer-events: none;
 }
+
+#blob-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
 
 
 .border-controls {
