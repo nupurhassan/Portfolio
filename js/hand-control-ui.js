@@ -1,184 +1,126 @@
-// hand control ui
+// Hand Control UI — permission flow + status
 
 const HandControlUI = {
-    elements: {},
-    isInitialized: false,
+    els: {},
+    ready: false,
 
     async init() {
-        this.createUI();
-        this.bindEvents();
-        
+        this._buildUI();
+        this._bindEvents();
         await HandControl.init();
-        
-        // when fist exits, update toggle UI
-        HandControl.onExit = () => {
-            this.onHandControlExit();
-        };
-
-        this.isInitialized = true;
+        HandControl.onExit = () => this._onExit();
+        this.ready = true;
         console.log('HandControlUI: Ready');
     },
 
-    createUI() {
-        // status indicator
+    _buildUI() {
+        // status pill
         const status = document.createElement('div');
         status.className = 'hand-status';
-        status.innerHTML = `
-            <span class="hand-status-dot"></span>
-            <span class="hand-status-text">Hand Control</span>
-        `;
+        status.innerHTML = '<span class="hand-status-dot"></span><span class="hand-status-text">Hand Control</span>';
         document.body.appendChild(status);
-        this.elements.status = status;
+        this.els.status = status;
 
         // gesture hints
         const hints = document.createElement('div');
         hints.className = 'hand-hints';
         hints.innerHTML = `
-            <div class="hand-hint">
-                <span class="hand-hint-icon">✋</span>
-                <span>Palm = Scroll</span>
-            </div>
-            <div class="hand-hint">
-                <span class="hand-hint-icon">✌️</span>
-                <span>2 fingers = Click</span>
-            </div>
-            <div class="hand-hint">
-                <span class="hand-hint-icon">🤟</span>
-                <span>3 fingers = Exit</span>
-            </div>
+            <div class="hand-hint"><span class="hand-hint-icon">☝️</span><span>Point = Move cursor</span></div>
+            <div class="hand-hint"><span class="hand-hint-icon">✌️</span><span>2 fingers = Click</span></div>
+            <div class="hand-hint"><span class="hand-hint-icon">🤟</span><span>3 fingers = Exit</span></div>
+            <div class="hand-hint"><span class="hand-hint-icon">👍</span><span>Thumbs up = Confetti</span></div>
         `;
         document.body.appendChild(hints);
-        this.elements.hints = hints;
+        this.els.hints = hints;
 
         // permission modal
-        const permission = document.createElement('div');
-        permission.className = 'hand-permission';
-        permission.innerHTML = `
+        const modal = document.createElement('div');
+        modal.className = 'hand-permission';
+        modal.innerHTML = `
             <div class="hand-permission-content">
                 <div class="hand-permission-icon">✋</div>
                 <h2 class="hand-permission-title">Hand Gesture Control</h2>
                 <p class="hand-permission-text">
-                    Control the site with your hand.<br>
-                    Camera stays local — nothing uploaded.
+                    Your index finger becomes the cursor.<br>
+                    Camera stays local — nothing leaves your device.
                 </p>
-                <div class="hand-permission-gestures">
-                    <div class="hand-permission-gesture">
-                        <span class="hand-permission-gesture-icon">✋</span>
-                        <span class="hand-permission-gesture-label">Scroll</span>
-                    </div>
-                    <div class="hand-permission-gesture">
-                        <span class="hand-permission-gesture-icon">✌️</span>
-                        <span class="hand-permission-gesture-label">Click</span>
-                    </div>
-                    <div class="hand-permission-gesture">
-                        <span class="hand-permission-gesture-icon">🤟</span>
-                        <span class="hand-permission-gesture-label">Exit</span>
-                    </div>
-                </div>
                 <button class="hand-permission-btn">Enable Camera</button>
                 <button class="hand-permission-skip">Skip</button>
             </div>
         `;
-        document.body.appendChild(permission);
-        this.elements.permission = permission;
+        document.body.appendChild(modal);
+        this.els.modal = modal;
     },
 
-    bindEvents() {
-        const enableBtn = this.elements.permission.querySelector('.hand-permission-btn');
-        const skipBtn = this.elements.permission.querySelector('.hand-permission-skip');
-
-        enableBtn.addEventListener('click', () => {
-            this.hidePermission();
-            this.start();
+    _bindEvents() {
+        this.els.modal.querySelector('.hand-permission-btn').addEventListener('click', () => {
+            this._hideModal();
+            this._start();
         });
 
-        skipBtn.addEventListener('click', () => {
-            this.hidePermission();
-            this.deactivateToggle();
+        this.els.modal.querySelector('.hand-permission-skip').addEventListener('click', () => {
+            this._hideModal();
+            this._resetToggle();
         });
 
         const handToggle = document.querySelector('[data-toggle="cursor"][data-value="hand"]');
-        const pointerToggle = document.querySelector('[data-toggle="cursor"][data-value="pointer"]');
+        const ptrToggle = document.querySelector('[data-toggle="cursor"][data-value="pointer"]');
 
         if (handToggle) {
             handToggle.addEventListener('click', () => {
-                if (!HandControl.isActive && this.isInitialized) {
-                    this.showPermission();
-                }
+                if (!HandControl.isActive && this.ready) this._showModal();
             });
         }
 
-        if (pointerToggle) {
-            pointerToggle.addEventListener('click', () => {
-                if (HandControl.isActive) {
-                    HandControl.stop();
-                }
+        if (ptrToggle) {
+            ptrToggle.addEventListener('click', () => {
+                if (HandControl.isActive) HandControl.stop();
             });
         }
     },
 
-    showPermission() {
-        this.elements.permission.classList.add('active');
-    },
+    _showModal() { this.els.modal.classList.add('active'); },
+    _hideModal() { this.els.modal.classList.remove('active'); },
 
-    hidePermission() {
-        this.elements.permission.classList.remove('active');
-    },
+    async _start() {
+        if (!this.ready) return;
 
-    async start() {
-        if (!this.isInitialized) return;
+        this.els.status.classList.add('active', 'detecting');
+        this.els.status.querySelector('.hand-status-text').textContent = 'Starting…';
 
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            this.showError('Camera not supported');
-            return;
-        }
-
-        this.elements.status.classList.add('active', 'detecting');
-        this.elements.status.querySelector('.hand-status-text').textContent = 'Starting...';
-        
         try {
             await HandControl.start();
-            
-            this.elements.status.classList.remove('detecting');
-            this.elements.status.querySelector('.hand-status-text').textContent = 'Hand Active';
-            this.elements.hints.classList.add('active');
-            
+            this.els.status.classList.remove('detecting');
+            this.els.status.querySelector('.hand-status-text').textContent = 'Hand Active';
+            this.els.hints.classList.add('active');
         } catch (err) {
-            console.error('HandControl error:', err);
-            
-            let errorMsg = 'Camera Error';
-            if (err.name === 'NotAllowedError') errorMsg = 'Camera denied';
-            else if (err.name === 'NotFoundError') errorMsg = 'No camera';
-            
-            this.showError(errorMsg);
+            let msg = 'Camera Error';
+            if (err.name === 'NotAllowedError') msg = 'Camera Denied';
+            else if (err.name === 'NotFoundError') msg = 'No Camera Found';
+
+            this.els.status.classList.remove('detecting');
+            this.els.status.classList.add('error');
+            this.els.status.querySelector('.hand-status-text').textContent = msg;
+
+            setTimeout(() => {
+                this.els.status.classList.remove('active', 'error');
+                this._resetToggle();
+            }, 3000);
         }
     },
 
-    showError(message) {
-        this.elements.status.classList.remove('detecting');
-        this.elements.status.classList.add('active', 'error');
-        this.elements.status.querySelector('.hand-status-text').textContent = message;
-        
-        setTimeout(() => {
-            this.elements.status.classList.remove('active', 'error');
-            this.deactivateToggle();
-        }, 3000);
+    _onExit() {
+        this.els.status.classList.remove('active', 'detecting');
+        this.els.hints.classList.remove('active');
+        this._resetToggle();
     },
 
-    onHandControlExit() {
-        // called when fist gesture exits hand mode
-        this.elements.status.classList.remove('active', 'detecting');
-        this.elements.hints.classList.remove('active');
-        this.deactivateToggle();
-    },
-
-    deactivateToggle() {
-        const pointerToggle = document.querySelector('[data-toggle="cursor"][data-value="pointer"]');
-        const handToggle = document.querySelector('[data-toggle="cursor"][data-value="hand"]');
-        
-        if (pointerToggle && handToggle) {
-            handToggle.classList.remove('active');
-            pointerToggle.classList.add('active');
+    _resetToggle() {
+        const ptr = document.querySelector('[data-toggle="cursor"][data-value="pointer"]');
+        const hand = document.querySelector('[data-toggle="cursor"][data-value="hand"]');
+        if (ptr && hand) {
+            hand.classList.remove('active');
+            ptr.classList.add('active');
         }
     }
 };
