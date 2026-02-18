@@ -1,4 +1,4 @@
-// text scramble effect
+// text scramble effect — runs ONCE on page load only
 
 class TextScramble {
     constructor(el) {
@@ -8,7 +8,6 @@ class TextScramble {
     }
 
     setText(newText) {
-        // IMPROVED: Postel's Law - respect reduced motion preferences
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             this.el.innerHTML = newText.split('').map(char =>
                 char === ' ' ? ' ' : `<span class="letter">${char}</span>`
@@ -73,32 +72,33 @@ class TextScramble {
     }
 }
 
-// nav link initialization
+// nav link initialization — scramble on load only, no hover
 function initNavScramble() {
     const navLinks = document.querySelectorAll('.nav-link');
-    const instances = [];
-
-    // IMPROVED: Postel's Law - check reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    navLinks.forEach((link) => {
+    navLinks.forEach((link, index) => {
         const text = link.dataset.text;
         const scramble = new TextScramble(link);
-        instances.push({ scramble, text });
 
-        link.innerHTML = text.split('').map(char =>
-            char === ' ' ? ' ' : `<span class="letter">${char}</span>`
+        // set initial empty letters
+        link.innerHTML = text.split('').map(() =>
+            `<span class="letter" style="opacity:0">&nbsp;</span>`
         ).join('');
+
+        // stagger the scramble on page load
+        if (!prefersReducedMotion) {
+            setTimeout(() => {
+                scramble.setText(text);
+            }, 300 + index * 150);
+        } else {
+            link.innerHTML = text.split('').map(char =>
+                char === ' ' ? ' ' : `<span class="letter">${char}</span>`
+            ).join('');
+        }
     });
 
-    // Only add hover effect if user doesn't prefer reduced motion
-    if (!prefersReducedMotion) {
-        navLinks.forEach((link, index) => {
-            link.addEventListener('mouseenter', () => {
-                instances[index].scramble.setText(instances[index].text);
-            });
-        });
-    }
+    // no hover listeners — scramble only happens once
 }
 
 window.TextScramble = TextScramble;

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
-    <!-- MediaPipe Scripts (loaded in head for availability) -->
+    <!-- MediaPipe Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/work.css">
     <link rel="stylesheet" href="css/hand-control.css">
 </head>
 <body>
@@ -74,15 +76,298 @@
             <p class="tagline">I design digital experiences that look <span class="emphasis">simple</span> and work <span class="emphasis">hard</span>.</p>
 
             <nav class="nav-container">
-                <a href="#work" class="nav-link" data-text="Work">Work</a>
-                <a href="#about" class="nav-link" data-text="About">About</a>
-                <a href="#skills" class="nav-link" data-text="Skills">Skills</a>
-                <a href="#contact" class="nav-link" data-text="Contact">Contact</a>
+                <a href="#work" class="nav-link" data-text="Work" data-page="work">Work</a>
+                <a href="#about" class="nav-link" data-text="About" data-page="about">About</a>
+                <a href="#skills" class="nav-link" data-text="Skills" data-page="skills">Skills</a>
+                <a href="#contact" class="nav-link" data-text="Contact" data-page="contact">Contact</a>
             </nav>
         </div>
 
         <div class="content-panel">
             <canvas id="grain-canvas"></canvas>
+
+            <!-- ═══ ABOUT PAGE ═══ -->
+            <div class="page-content" id="page-about">
+                <button class="back-btn" onclick="PageNav.close()">
+                    <span class="back-btn-arrow">←</span>
+                    Back
+                </button>
+
+                <div class="about-inner">
+                    <!-- intro -->
+                    <div class="about-intro">
+                        <p class="about-greeting">Hello, I'm</p>
+                        <h1 class="about-name">Nupur</h1>
+                        <p class="about-title">Software Engineering Student</p>
+                    </div>
+
+                    <!-- bio -->
+                    <div class="about-bio">
+                        <p>Driven Software Engineering student pursuing a bachelor's degree with hands-on experience in software engineering, big data, and full stack development. I solve complex technical challenges and build innovative solutions — bridging the gap between engineering precision and strategic thinking.</p>
+                    </div>
+
+                    <!-- focus areas -->
+                    <div class="about-focus">
+                        <p class="about-section-label">What I Do</p>
+                        <div class="focus-grid">
+                            <div class="focus-item">
+                                <span class="focus-number">01</span>
+                                <span class="focus-text">Full-Stack Development</span>
+                            </div>
+                            <div class="focus-item">
+                                <span class="focus-number">02</span>
+                                <span class="focus-text">Software Engineering</span>
+                            </div>
+                            <div class="focus-item">
+                                <span class="focus-number">03</span>
+                                <span class="focus-text">Big Data & Analytics</span>
+                            </div>
+                            <div class="focus-item">
+                                <span class="focus-number">04</span>
+                                <span class="focus-text">Strategy & Innovation</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- traits -->
+                    <div class="about-traits">
+                        <p class="about-section-label">What I Bring</p>
+                        <div class="traits-row">
+                            <div class="trait">
+                                <p class="trait-label">Approach</p>
+                                <p class="trait-value">Complex problem solving with clear, elegant solutions</p>
+                            </div>
+                            <div class="trait">
+                                <p class="trait-label">Strength</p>
+                                <p class="trait-value">Strong communicator who works cross-functionally</p>
+                            </div>
+                            <div class="trait">
+                                <p class="trait-label">Drive</p>
+                                <p class="trait-value">Constantly building, learning, and shipping</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- seeking -->
+                    <div class="about-seeking">
+                        <p class="about-section-label">Open To</p>
+                        <div class="seeking-roles">
+                            <span class="role-tag">Software Engineering Intern</span>
+                            <span class="role-tag">Strategy Associate</span>
+                            <span class="role-tag">Full-Stack Engineer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ═══ END ABOUT ═══ -->
+
+            <!-- ═══ WORK PAGE ═══ -->
+            <div class="page-content" id="page-work">
+                <button class="back-btn" onclick="PageNav.close()">
+                    <span class="back-btn-arrow">←</span>
+                    Back
+                </button>
+
+                <div class="work-inner">
+                    <div class="work-intro">
+                        <h1 class="work-heading">Experience</h1>
+                        <p class="work-subheading">Select a role to expand</p>
+                    </div>
+
+                    <div class="folder-stack">
+
+                        <div class="work-folder" onclick="toggleFolder(this)">
+                            <div class="folder-body">
+                                <span class="folder-hint">+</span>
+                                <div class="folder-header">
+                                    <div>
+                                        <div class="folder-role">Undergraduate Teaching Assistant</div>
+                                        <div class="folder-company">Fulton Engineering · Arizona State University</div>
+                                    </div>
+                                    <div class="folder-meta">
+                                        <span class="folder-date">Aug 2025 — Jan 2026</span>
+                                        <span class="folder-type">Part-time</span>
+                                    </div>
+                                </div>
+                                <div class="folder-details">
+                                    <div class="folder-detail-list">
+                                        <p class="folder-detail">Taught SER 322 Database Management — SQL, ER modeling, schema design</p>
+                                        <p class="folder-detail">Ran weekly labs and office hours for 50+ students, clearing 90% of queries live</p>
+                                        <p class="folder-detail">Graded 100+ assignments with rubric-aligned feedback</p>
+                                        <p class="folder-detail">Drove 15% lift in average student performance through targeted review sessions</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-folder" onclick="toggleFolder(this)">
+                            <div class="folder-body">
+                                <span class="folder-hint">+</span>
+                                <div class="folder-header">
+                                    <div>
+                                        <div class="folder-role">Vice President, Engineering</div>
+                                        <div class="folder-company">Operation Sundevil: remixed</div>
+                                    </div>
+                                    <div class="folder-meta">
+                                        <span class="folder-date">Jul 2025 — Present</span>
+                                        <span class="folder-type">Contract</span>
+                                    </div>
+                                </div>
+                                <div class="folder-details">
+                                    <div class="folder-detail-list">
+                                        <p class="folder-detail">Shipped a cybersecurity web app end-to-end — React frontend, Flask API, secure auth</p>
+                                        <p class="folder-detail">Architected RBAC and permissioning for sensitive views in high-trust environments</p>
+                                        <p class="folder-detail">Wired client components to RESTful endpoints for low-latency interactions</p>
+                                        <p class="folder-detail">Owned project roadmap, coordinated dev sprints, shipped on schedule</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-folder" onclick="toggleFolder(this)">
+                            <div class="folder-body">
+                                <span class="folder-hint">+</span>
+                                <div class="folder-header">
+                                    <div>
+                                        <div class="folder-role">Research Assistant</div>
+                                        <div class="folder-company">Arizona State University</div>
+                                    </div>
+                                    <div class="folder-meta">
+                                        <span class="folder-date">Jun 2025 — Jan 2026</span>
+                                        <span class="folder-type">Part-time</span>
+                                    </div>
+                                </div>
+                                <div class="folder-details">
+                                    <div class="folder-detail-list">
+                                        <p class="folder-detail">Co-authored paper on urban tree cooling efficacy in Phoenix's extreme heat</p>
+                                        <p class="folder-detail">Collected 100+ environmental variables across field sites, &lt;2% error margin</p>
+                                        <p class="folder-detail">Processed 5,000+ data points — Python, Pandas, NumPy, SQL</p>
+                                        <p class="folder-detail">Regression + Monte Carlo simulations improved predictive accuracy by 23%</p>
+                                        <p class="folder-detail">Built Tableau dashboards that cut stakeholder review time 40%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-folder" onclick="toggleFolder(this)">
+                            <div class="folder-body">
+                                <span class="folder-hint">+</span>
+                                <div class="folder-header">
+                                    <div>
+                                        <div class="folder-role">Lead Software Engineer</div>
+                                        <div class="folder-company">BariTrack</div>
+                                    </div>
+                                    <div class="folder-meta">
+                                        <span class="folder-date">Jul — Nov 2025</span>
+                                        <span class="folder-type">Part-time</span>
+                                    </div>
+                                </div>
+                                <div class="folder-details">
+                                    <div class="folder-detail-list">
+                                        <p class="folder-detail">Designed full product — React clinician dashboard, Flutter patient app, secure API</p>
+                                        <p class="folder-detail">Built tracking workflows for weight, nutrition, hydration, activity, symptoms</p>
+                                        <p class="folder-detail">Created provider views for longitudinal data visualization and risk monitoring</p>
+                                        <p class="folder-detail">Implemented PHI-compliant auth, role-based access, and structured data models</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-folder" onclick="toggleFolder(this)">
+                            <div class="folder-body">
+                                <span class="folder-hint">+</span>
+                                <div class="folder-header">
+                                    <div>
+                                        <div class="folder-role">Software Development Intern</div>
+                                        <div class="folder-company">QQuantify</div>
+                                    </div>
+                                    <div class="folder-meta">
+                                        <span class="folder-date">Sep — Nov 2023</span>
+                                        <span class="folder-type">Remote</span>
+                                    </div>
+                                </div>
+                                <div class="folder-details">
+                                    <div class="folder-detail-list">
+                                        <p class="folder-detail">Integrated quantum algorithm into production systems — 20% faster processing (Python, C++)</p>
+                                        <p class="folder-detail">Reduced qubit decoherence 10% through applied research on emerging techniques</p>
+                                        <p class="folder-detail">Shipped 5 solutions across cross-functional teams of devs, analysts, and PMs</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-folder" onclick="toggleFolder(this)">
+                            <div class="folder-body">
+                                <span class="folder-hint">+</span>
+                                <div class="folder-header">
+                                    <div>
+                                        <div class="folder-role">Software Engineer Intern</div>
+                                        <div class="folder-company">KM Data Strategists</div>
+                                    </div>
+                                    <div class="folder-meta">
+                                        <span class="folder-date">May — Aug 2023</span>
+                                        <span class="folder-type">Remote</span>
+                                    </div>
+                                </div>
+                                <div class="folder-details">
+                                    <div class="folder-detail-list">
+                                        <p class="folder-detail">Ran end-to-end QA for a major release — bugs down 20%, user satisfaction up 15%</p>
+                                        <p class="folder-detail">Managed sprints in JIRA, tracked user stories to 100% on-time delivery</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-folder" onclick="toggleFolder(this)">
+                            <div class="folder-body">
+                                <span class="folder-hint">+</span>
+                                <div class="folder-header">
+                                    <div>
+                                        <div class="folder-role">Team Lead — Engineering Projects in Community Service</div>
+                                        <div class="folder-company">EPICS at ASU</div>
+                                    </div>
+                                    <div class="folder-meta">
+                                        <span class="folder-date">Jan — May 2023</span>
+                                        <span class="folder-type">On-site</span>
+                                    </div>
+                                </div>
+                                <div class="folder-details">
+                                    <div class="folder-detail-list">
+                                        <p class="folder-detail">Led team building a Flutter wayfinding app for visually impaired students</p>
+                                        <p class="folder-detail">Delivered on time, under budget — facilitated ideation and unblocked the team</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="work-folder" onclick="toggleFolder(this)">
+                            <div class="folder-body">
+                                <span class="folder-hint">+</span>
+                                <div class="folder-header">
+                                    <div>
+                                        <div class="folder-role">Web Development & Database Intern</div>
+                                        <div class="folder-company">Loginware Softech</div>
+                                    </div>
+                                    <div class="folder-meta">
+                                        <span class="folder-date">May 2022</span>
+                                        <span class="folder-type">On-site</span>
+                                    </div>
+                                </div>
+                                <div class="folder-details">
+                                    <div class="folder-detail-list">
+                                        <p class="folder-detail">Built extensible web interface for real-time remote data access and control</p>
+                                        <p class="folder-detail">Optimized frontend and added features — engagement up 15%</p>
+                                        <p class="folder-detail">Integrated third-party APIs to extend platform functionality</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- ═══ END WORK ═══ -->
+
         </div>
     </div>
 </div>
@@ -98,18 +383,97 @@
 <script src="js/hand-control-ui.js"></script>
 
 <script>
-    // initialize core modules
-    Cursor.init({ hoverElements: '.nav-link, .toggle-option' });
+    // ── Page Navigation ────────────────────────────────────
+    const PageNav = {
+        current: null,
+        grainCanvas: null,
+
+        init() {
+            this.grainCanvas = document.getElementById('grain-canvas');
+
+            // bind nav links
+            document.querySelectorAll('.nav-link[data-page]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.dataset.page;
+                    this.open(page);
+                });
+            });
+        },
+
+        open(page) {
+            const el = document.getElementById('page-' + page);
+            if (!el) return;
+
+            // close any open page first
+            if (this.current && this.current !== page) {
+                this.close(() => this.open(page));
+                return;
+            }
+
+            // dim the grain shader
+            if (this.grainCanvas) {
+                this.grainCanvas.style.transition = 'opacity 0.5s ease';
+                this.grainCanvas.style.opacity = '0.08';
+            }
+
+            // show page
+            el.classList.add('active');
+            el.scrollTop = 0;
+            this.current = page;
+
+            // reset animations by re-adding class
+            el.querySelectorAll('[class*="about-"]').forEach(child => {
+                child.style.animation = 'none';
+                child.offsetHeight; // reflow
+                child.style.animation = '';
+            });
+        },
+
+        close(callback) {
+            if (!this.current) {
+                if (callback) callback();
+                return;
+            }
+
+            const el = document.getElementById('page-' + this.current);
+            if (el) {
+                el.classList.remove('active');
+            }
+
+            // restore grain
+            if (this.grainCanvas) {
+                this.grainCanvas.style.opacity = '1';
+            }
+
+            this.current = null;
+
+            if (callback) {
+                setTimeout(callback, 400);
+            }
+        }
+    };
+
+    // ── Initialize everything ──────────────────────────────
+    Cursor.init({ hoverElements: '.nav-link, .toggle-option, .back-btn, .role-tag, .work-folder' });
     initNavScramble();
 
     const shaderMaterial = GrainShader.init('grain-canvas', '.content-panel');
     Theme.init(shaderMaterial);
     Toggles.init();
-
-    // initialize blob (behind everything)
     Blob.init('blob-canvas');
+    PageNav.init();
 
-    // Add keyboard support for toggles (Accessibility)
+    // folder toggle
+    function toggleFolder(el) {
+        const wasOpen = el.classList.contains('open');
+        // close all first
+        document.querySelectorAll('.work-folder.open').forEach(f => f.classList.remove('open'));
+        // open clicked one (unless it was already open)
+        if (!wasOpen) el.classList.add('open');
+    }
+
+    // keyboard support for toggles
     document.querySelectorAll('.toggle-option').forEach(option => {
         option.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -119,13 +483,13 @@
         });
     });
 
-    // initialize hand control (MediaPipe already loaded via CDN in head)
+    // hand control
     HandControlUI.init().then(() => {
         console.log('Hand control ready');
     }).catch(err => {
         console.error('Hand control init failed:', err);
     });
-</script>F
+</script>
 
 </body>
 </html>

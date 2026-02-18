@@ -1,0 +1,333 @@
+/* about page styles */
+
+.page-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    scrollbar-width: none;
+}
+
+.page-content::-webkit-scrollbar {
+    display: none;
+}
+
+.page-content.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* back button */
+.back-btn {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 28px 40px;
+    background: linear-gradient(to bottom, var(--panel-bg) 60%, transparent);
+    border: none;
+    color: var(--bg);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    letter-spacing: 5px;
+}
+
+.back-btn-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover .back-btn-arrow {
+    transform: translateX(-4px);
+}
+
+/* about layout */
+.about-inner {
+    padding: 0 50px 60px;
+    max-width: 100%;
+}
+
+/* intro section */
+.about-intro {
+    padding: 20px 0 50px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="dark"] .about-intro {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.about-greeting {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--bg);
+    opacity: 0.4;
+    margin-bottom: 20px;
+    transform: translateY(20px);
+    animation: aboutFadeUp 0.6s ease 0.2s forwards;
+}
+
+.about-name {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--bg);
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: aboutFadeUp 0.6s ease 0.35s forwards;
+}
+
+.about-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bg);
+    opacity: 0.5;
+    transform: translateY(20px);
+    animation: aboutFadeUp 0.6s ease 0.5s forwards;
+}
+
+/* bio */
+.about-bio {
+    padding: 45px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: aboutFadeUp 0.6s ease 0.65s forwards;
+}
+
+[data-theme="dark"] .about-bio {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.about-bio p {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--bg);
+    opacity: 0.75;
+    max-width: 520px;
+}
+
+/* focus areas */
+.about-focus {
+    padding: 45px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: aboutFadeUp 0.6s ease 0.8s forwards;
+}
+
+[data-theme="dark"] .about-focus {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.about-section-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--bg);
+    opacity: 0.35;
+    margin-bottom: 30px;
+}
+
+.focus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.focus-item {
+    padding: 22px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+}
+
+[data-theme="dark"] .focus-item {
+    border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.focus-item:nth-child(odd) {
+    padding-right: 30px;
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .focus-item:nth-child(odd) {
+    border-right-color: rgba(255, 255, 255, 0.06);
+}
+
+.focus-item:nth-child(even) {
+    padding-left: 30px;
+}
+
+.focus-number {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--bg);
+    opacity: 0.25;
+    flex-shrink: 0;
+}
+
+.focus-text {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--bg);
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+}
+
+/* what I bring */
+.about-traits {
+    padding: 45px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: aboutFadeUp 0.6s ease 0.95s forwards;
+}
+
+[data-theme="dark"] .about-traits {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.traits-row {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.trait {
+    flex: 1;
+    min-width: 140px;
+}
+
+.trait-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--bg);
+    opacity: 0.3;
+    margin-bottom: 10px;
+}
+
+.trait-value {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--bg);
+    opacity: 0.7;
+    line-height: 1.5;
+}
+
+/* seeking */
+.about-seeking {
+    padding: 45px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: aboutFadeUp 0.6s ease 1.1s forwards;
+}
+
+.seeking-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.role-tag {
+    padding: 10px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 100px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--bg);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .role-tag {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.role-tag:hover {
+    opacity: 1;
+    border-color: var(--bg);
+    transform: translateY(-2px);
+}
+
+/* animation */
+@keyframes aboutFadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* hide grain canvas when page content is active */
+.content-panel .page-content.active ~ #grain-canvas {
+    opacity: 0.15;
+    transition: opacity 0.6s ease;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+    .about-inner {
+        padding: 0 30px 40px;
+    }
+
+    .about-name {
+        font-size: 36px;
+    }
+
+    .about-bio p {
+        font-size: 16px;
+    }
+
+    .focus-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .focus-item:nth-child(odd) {
+        padding-right: 0;
+        border-right: none;
+    }
+
+    .focus-item:nth-child(even) {
+        padding-left: 0;
+    }
+
+    .traits-row {
+        gap: 25px;
+    }
+
+    .back-btn {
+        padding: 20px 30px;
+    }
+}
