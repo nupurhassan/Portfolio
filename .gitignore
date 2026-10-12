@@ -1,0 +1,11 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+
+# Loose screenshots (put README images in assets/ instead)
+/Screenshot*.png
