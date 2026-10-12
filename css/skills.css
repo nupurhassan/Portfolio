@@ -1,0 +1,214 @@
+/* skills page — Hairline Riffle tray of 8 skill folders */
+
+/* Hairline figure colors, matched to the panel */
+[data-theme="dark"] .skills-inner {
+    --hairline-plate: #d4cfc8;
+    --hairline-hi: #0a0a0a;
+    --hairline-edge: #4d4943;
+    --hairline-mid: #8a847b;
+    --hairline-lo: #b9b3aa;
+    --hairline-stroke: 1;
+}
+
+[data-theme="light"] .skills-inner {
+    --hairline-plate: #1a1a1a;
+    --hairline-hi: #f7f5f2;
+    --hairline-edge: #b3aea6;
+    --hairline-mid: #5f5b55;
+    --hairline-lo: #35322f;
+    --hairline-stroke: 1;
+}
+
+/* hint text follows the input: hover + keys on desktop, tap on touch screens */
+.hint-touch { display: none; }
+
+@media (hover: none) {
+    .hint-pointer { display: none; }
+    .hint-touch { display: inline; }
+}
+
+/* ── tray + detail ── */
+.riffle-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: aboutFadeUp 0.6s ease 0.3s forwards;
+}
+
+.riffle-figure {
+    width: 100%;
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
+}
+
+.riffle-figure:focus-visible {
+    box-shadow: 0 0 0 1px rgba(var(--ink), 0.35);
+}
+
+.riffle-layout.no-figure {
+    grid-template-columns: 1fr;
+}
+
+.riffle-layout.no-figure .riffle-stage {
+    display: none;
+}
+
+/* ── detail ── */
+.rf-detail {
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+}
+
+.rf-item {
+    width: 100%;
+}
+
+.rf-item.is-active {
+    animation: rfIn 0.35s var(--ease-out);
+}
+
+@keyframes rfIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.rf-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(var(--ink), 0.85);
+    margin-bottom: 14px;
+}
+
+.rf-num span {
+    color: rgba(var(--ink), 0.3);
+}
+
+.rf-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    color: rgba(var(--ink), 0.88);
+    margin-bottom: 8px;
+}
+
+.rf-blurb {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    color: rgba(var(--ink), 0.5);
+    margin-bottom: 20px;
+}
+
+.rf-chips {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.rf-chips li {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    padding: 6px 12px;
+    border: 1px solid rgba(var(--ink), 0.15);
+    border-radius: 20px;
+    color: rgba(var(--ink), 0.75);
+}
+
+/* ── index of all groups: two columns of buttons ── */
+.rf-index {
+    list-style: none;
+    margin: 36px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+    border-top: 1px solid rgba(var(--ink), 0.1);
+    opacity: 0;
+    animation: aboutFadeUp 0.6s ease 0.45s forwards;
+}
+
+.rf-index li {
+    border-bottom: 1px solid rgba(var(--ink), 0.07);
+}
+
+.rf-index button {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    gap: 10px;
+    align-items: baseline;
+    padding: 12px 6px;
+    background: none;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    color: rgba(var(--ink), 0.45);
+    transition: color 0.25s ease, padding-left 0.25s var(--ease-out);
+}
+
+.rf-index button:hover,
+.rf-index button:focus-visible {
+    color: rgba(var(--ink), 0.75);
+    outline: none;
+}
+
+.rf-index button[aria-current="true"] {
+    color: rgba(var(--ink), 0.9);
+    padding-left: 12px;
+}
+
+.ri-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+}
+
+.ri-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ── responsive ── */
+@media (max-width: 1100px) {
+    .riffle-layout {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .riffle-stage {
+        max-width: 420px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .rf-detail {
+        min-height: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .rf-index {
+        grid-template-columns: 1fr;
+    }
+
+    .rf-title {
+        font-size: 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rf-item.is-active { animation: none; }
+}

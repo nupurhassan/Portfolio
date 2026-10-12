@@ -1,39 +1,28 @@
-/* work page — Riffle tray of roles */
+/* work page — case-study cards (Experience)
+   Also holds the panel colors and intro styles shared with the Skills page. */
 
 /* ink = the text color that sits ON the panel, as rgb channels
    dark theme: panel is warm-gray → ink is black
    light theme: panel is dark-gray → ink is white */
-[data-theme="dark"] .work-inner {
+[data-theme="dark"] .work-inner,
+[data-theme="dark"] .skills-inner {
     --ink: 0, 0, 0;
-    --panel: #d4cfc8;
-    /* Hairline figure colors, matched to the panel */
-    --hairline-plate: #d4cfc8;
-    --hairline-hi: #0a0a0a;
-    --hairline-edge: #4d4943;
-    --hairline-mid: #8a847b;
-    --hairline-lo: #b9b3aa;
-    --hairline-stroke: 1;
 }
 
-[data-theme="light"] .work-inner {
+[data-theme="light"] .work-inner,
+[data-theme="light"] .skills-inner {
     --ink: 255, 255, 255;
-    --panel: #1a1a1a;
-    --hairline-plate: #1a1a1a;
-    --hairline-hi: #f7f5f2;
-    --hairline-edge: #b3aea6;
-    --hairline-mid: #5f5b55;
-    --hairline-lo: #35322f;
-    --hairline-stroke: 1;
 }
 
-.work-inner {
+.work-inner,
+.skills-inner {
     padding: 0 44px 80px;
     max-width: 100%;
 }
 
-/* ── intro ── */
+/* ── intro (shared) ── */
 .work-intro {
-    padding: 16px 0 28px;
+    padding: 16px 0 32px;
     opacity: 0;
     transform: translateY(20px);
     animation: aboutFadeUp 0.6s ease 0.2s forwards;
@@ -57,209 +46,238 @@
     color: rgba(var(--ink), 0.35);
 }
 
-/* hint text follows the input: hover + keys on desktop, tap on touch screens */
-.hint-touch { display: none; }
-
-@media (hover: none) {
-    .hint-pointer { display: none; }
-    .hint-touch { display: inline; }
+/* ── card list ── */
+.xp-list {
+    border-top: 1px solid rgba(var(--ink), 0.12);
 }
 
-/* ── tray + detail ── */
-.riffle-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    gap: 28px;
-    align-items: center;
+.xp {
+    position: relative;
+    border-bottom: 1px solid rgba(var(--ink), 0.1);
     opacity: 0;
-    transform: translateY(14px);
-    animation: aboutFadeUp 0.6s ease 0.3s forwards;
+    transform: translateY(10px);
+    animation: aboutFadeUp 0.45s ease forwards;
+    animation-delay: calc(0.25s + var(--i) * 0.05s);
 }
 
-.riffle-figure {
+/* a rule that draws in along the left edge on hover / open */
+.xp::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 22px;
+    width: 2px;
+    height: 0;
+    background: rgba(var(--ink), 0.8);
+    transition: height 0.35s var(--ease-out);
+}
+
+.xp:hover::before,
+.xp:focus-within::before,
+.xp.is-open::before {
+    height: 26px;
+}
+
+.xp-h {
+    margin: 0;
+    font: inherit;
+}
+
+.xp-head {
     width: 100%;
-    border-radius: 12px;
-    outline: none;
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) auto 18px;
+    gap: 16px;
+    align-items: start;
+    padding: 22px 6px 10px 6px;
+    background: none;
+    border: 0;
+    text-align: left;
     cursor: pointer;
+    color: inherit;
+    transition: padding-left 0.35s var(--ease-out);
 }
 
-.riffle-figure:focus-visible {
-    box-shadow: 0 0 0 1px rgba(var(--ink), 0.35);
+.xp:hover .xp-head,
+.xp.is-open .xp-head,
+.xp-head:focus-visible {
+    padding-left: 20px;
 }
 
-.riffle-layout.no-figure {
-    grid-template-columns: 1fr;
+.xp-head:focus-visible {
+    outline: none;
 }
 
-.riffle-layout.no-figure .riffle-stage {
-    display: none;
+.xp-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: rgba(var(--ink), 0.35);
+    padding-top: 6px;
 }
 
-/* ── role detail ── */
-.role-detail {
-    min-height: 300px;
+.xp-main {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
 }
 
-.role {
-    width: 100%;
+.xp-impact {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.2px;
+    color: rgba(var(--ink), 0.62);
+    transition: color 0.3s ease;
 }
 
-.role.is-active {
-    animation: roleIn 0.35s var(--ease-out);
+.xp:hover .xp-impact,
+.xp.is-open .xp-impact,
+.xp-head:focus-visible .xp-impact {
+    color: rgba(var(--ink), 0.92);
 }
 
-@keyframes roleIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: none; }
-}
-
-.role-num {
+.xp-role {
     font-family: var(--font-mono);
     font-size: 11px;
-    letter-spacing: 2px;
-    color: rgba(var(--ink), 0.85);
-    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+    color: rgba(var(--ink), 0.5);
 }
 
-.role-num span {
+.xp-at {
     color: rgba(var(--ink), 0.3);
 }
 
-.role-title {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.3px;
-    color: rgba(var(--ink), 0.88);
-    margin-bottom: 6px;
-}
-
-.role-company {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.5px;
-    color: rgba(var(--ink), 0.5);
-    margin-bottom: 14px;
-}
-
-.role-meta {
+.xp-side {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    padding-top: 6px;
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: rgba(var(--ink), 0.4);
-    margin-bottom: 20px;
+    white-space: nowrap;
 }
 
-.role-type {
-    padding: 3px 8px;
+.xp-type {
+    padding: 2px 8px;
     border: 1px solid rgba(var(--ink), 0.15);
     border-radius: 20px;
 }
 
-.role-points {
+/* plus that turns into a minus */
+.xp-icon {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    margin-top: 8px;
+}
+
+.xp-icon::before,
+.xp-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 5.5px;
+    width: 12px;
+    height: 1px;
+    background: rgba(var(--ink), 0.45);
+    transition: transform 0.35s var(--ease-out);
+}
+
+.xp-icon::after {
+    transform: rotate(90deg);
+}
+
+.xp.is-open .xp-icon::after {
+    transform: rotate(0deg);
+}
+
+/* ── tech tags ── */
+.xp-tags {
     list-style: none;
-    padding: 0 0 0 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
     margin: 0;
-    border-left: 1px solid rgba(var(--ink), 0.1);
+    padding: 0 6px 20px calc(6px + 34px + 16px);
+    transition: padding-left 0.35s var(--ease-out);
+}
+
+.xp:hover .xp-tags,
+.xp.is-open .xp-tags,
+.xp:focus-within .xp-tags {
+    padding-left: calc(20px + 34px + 16px);
+}
+
+.xp-tags li {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.5px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: rgba(var(--ink), 0.05);
+    color: rgba(var(--ink), 0.5);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.xp:hover .xp-tags li,
+.xp.is-open .xp-tags li {
+    background: rgba(var(--ink), 0.08);
+    color: rgba(var(--ink), 0.7);
+}
+
+/* ── details: animates open with a 0fr → 1fr grid row ── */
+.xp-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s var(--ease-out);
+}
+
+.xp.is-open .xp-body {
+    grid-template-rows: 1fr;
+}
+
+.xp-body-inner {
+    overflow: hidden;
+    min-height: 0;
+}
+
+.xp-points {
+    list-style: none;
+    margin: 0 0 24px calc(20px + 34px + 16px);
+    padding: 0 0 0 16px;
+    border-left: 1px solid rgba(var(--ink), 0.12);
     display: flex;
     flex-direction: column;
     gap: 9px;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.3s ease, transform 0.35s var(--ease-out);
 }
 
-.role-points li {
+.xp.is-open .xp-points {
+    opacity: 1;
+    transform: none;
+    transition-delay: 0.08s;
+}
+
+.xp-points li {
     font-family: var(--font-mono);
     font-size: 12px;
     line-height: 1.6;
-    color: rgba(var(--ink), 0.6);
-}
-
-/* ── index of all roles ── */
-.role-index {
-    list-style: none;
-    margin: 36px 0 0;
-    padding: 0;
-    border-top: 1px solid rgba(var(--ink), 0.1);
-    opacity: 0;
-    animation: aboutFadeUp 0.6s ease 0.45s forwards;
-}
-
-.role-index li {
-    border-bottom: 1px solid rgba(var(--ink), 0.07);
-}
-
-.role-index button {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 36px 1fr auto;
-    gap: 14px;
-    align-items: baseline;
-    padding: 12px 6px;
-    background: none;
-    border: 0;
-    text-align: left;
-    cursor: pointer;
-    color: rgba(var(--ink), 0.45);
-    transition: color 0.25s ease, padding-left 0.25s var(--ease-out);
-}
-
-.role-index button:hover,
-.role-index button:focus-visible {
-    color: rgba(var(--ink), 0.75);
-    outline: none;
-}
-
-.role-index button[aria-current="true"] {
-    color: rgba(var(--ink), 0.9);
-    padding-left: 12px;
-}
-
-.ri-num,
-.ri-date {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-}
-
-.ri-date {
-    text-transform: uppercase;
-    font-size: 9px;
-    opacity: 0.8;
-}
-
-.ri-title {
-    font-family: var(--font-display);
-    font-size: 14px;
-    font-weight: 600;
+    color: rgba(var(--ink), 0.62);
 }
 
 /* ── responsive ── */
-@media (max-width: 1100px) {
-    .riffle-layout {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .riffle-stage {
-        max-width: 420px;
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .role-detail {
-        min-height: 0;
-    }
-}
-
 @media (max-width: 900px) {
-    .work-inner {
+    .work-inner,
+    .skills-inner {
         padding: 0 24px 50px;
     }
 
@@ -267,29 +285,49 @@
         font-size: 30px;
     }
 
-    .role-title {
-        font-size: 20px;
+    .xp-impact {
+        font-size: 17px;
     }
 }
 
-@media (max-width: 500px) {
-    .work-inner {
+@media (max-width: 600px) {
+    .work-inner,
+    .skills-inner {
         padding: 0 16px 40px;
     }
 
-    .role-index button {
-        grid-template-columns: 28px 1fr;
+    .xp-head {
+        grid-template-columns: 24px minmax(0, 1fr) 14px;
+        gap: 10px;
     }
 
-    .ri-date {
+    .xp-side {
         display: none;
     }
 
-    .role-points li {
+    .xp:hover .xp-head,
+    .xp.is-open .xp-head {
+        padding-left: 12px;
+    }
+
+    .xp-tags,
+    .xp:hover .xp-tags,
+    .xp.is-open .xp-tags,
+    .xp:focus-within .xp-tags {
+        padding-left: calc(6px + 24px + 10px);
+    }
+
+    .xp-points {
+        margin-left: calc(6px + 24px + 10px);
+    }
+
+    .xp-points li {
         font-size: 11px;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .role.is-active { animation: none; }
+    .xp-head, .xp-tags, .xp-body, .xp-points, .xp::before, .xp-icon::after {
+        transition: none;
+    }
 }

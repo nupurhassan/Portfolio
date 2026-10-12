@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/homepage.css">
     <link rel="stylesheet" href="css/about.css">
     <link rel="stylesheet" href="css/work.css">
+    <link rel="stylesheet" href="css/skills.css">
     <link rel="stylesheet" href="css/hand-control.css">
 </head>
 <body>
@@ -171,110 +172,335 @@
                 <div class="work-inner">
                     <div class="work-intro">
                         <h1 class="work-heading">Experience</h1>
-                        <p class="work-subheading"><span class="hint-pointer">Hover the cards · or use ← → keys</span><span class="hint-touch">Tap a card · or a role below</span></p>
+                        <p class="work-subheading">8 roles · open one for the details</p>
                     </div>
 
-                    <div class="riffle-layout">
+                    <div class="xp-list">
+                        <article class="xp" style="--i:0">
+                            <h2 class="xp-h">
+                                <button class="xp-head" type="button" aria-expanded="false" aria-controls="xp-01-body">
+                                    <span class="xp-num">01</span>
+                                    <span class="xp-main">
+                                        <span class="xp-impact">Taught database design to 50+ students a week</span>
+                                        <span class="xp-role">Undergraduate Teaching Assistant <span class="xp-at">·</span> Fulton Engineering · Arizona State University</span>
+                                    </span>
+                                    <span class="xp-side">
+                                        <span class="xp-date">Aug 2025 — Jan 2026</span>
+                                        <span class="xp-type">Part-time</span>
+                                    </span>
+                                    <span class="xp-icon" aria-hidden="true"></span>
+                                </button>
+                            </h2>
+                            <ul class="xp-tags" aria-label="Technologies"><li>SQL</li><li>ER Modeling</li><li>Schema Design</li><li>Teaching</li></ul>
+                            <div class="xp-body" id="xp-01-body">
+                                <div class="xp-body-inner">
+                                    <ul class="xp-points">
+                                    <li>Taught SER 322 Database Management — SQL, ER modeling, schema design</li>
+                                    <li>Ran weekly labs and office hours for 50+ students, clearing 90% of queries live</li>
+                                    <li>Graded 100+ assignments with rubric-aligned feedback</li>
+                                    <li>Drove 15% lift in average student performance through targeted review sessions</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="xp" style="--i:1">
+                            <h2 class="xp-h">
+                                <button class="xp-head" type="button" aria-expanded="false" aria-controls="xp-02-body">
+                                    <span class="xp-num">02</span>
+                                    <span class="xp-main">
+                                        <span class="xp-impact">Built a secure cybersecurity web app with role-based access</span>
+                                        <span class="xp-role">Vice President, Engineering <span class="xp-at">·</span> Operation Sundevil: remixed</span>
+                                    </span>
+                                    <span class="xp-side">
+                                        <span class="xp-date">Jul 2025 — Present</span>
+                                        <span class="xp-type">Contract</span>
+                                    </span>
+                                    <span class="xp-icon" aria-hidden="true"></span>
+                                </button>
+                            </h2>
+                            <ul class="xp-tags" aria-label="Technologies"><li>React</li><li>Flask</li><li>REST APIs</li><li>RBAC</li><li>Auth</li></ul>
+                            <div class="xp-body" id="xp-02-body">
+                                <div class="xp-body-inner">
+                                    <ul class="xp-points">
+                                    <li>Shipped a cybersecurity web app end-to-end — React frontend, Flask API, secure auth</li>
+                                    <li>Architected RBAC and permissioning for sensitive views in high-trust environments</li>
+                                    <li>Wired client components to RESTful endpoints for low-latency interactions</li>
+                                    <li>Owned project roadmap, coordinated dev sprints, shipped on schedule</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="xp" style="--i:2">
+                            <h2 class="xp-h">
+                                <button class="xp-head" type="button" aria-expanded="false" aria-controls="xp-03-body">
+                                    <span class="xp-num">03</span>
+                                    <span class="xp-main">
+                                        <span class="xp-impact">Co-authored research on urban tree cooling in Phoenix heat</span>
+                                        <span class="xp-role">Research Assistant <span class="xp-at">·</span> Arizona State University</span>
+                                    </span>
+                                    <span class="xp-side">
+                                        <span class="xp-date">Jun 2025 — Jan 2026</span>
+                                        <span class="xp-type">Part-time</span>
+                                    </span>
+                                    <span class="xp-icon" aria-hidden="true"></span>
+                                </button>
+                            </h2>
+                            <ul class="xp-tags" aria-label="Technologies"><li>Python</li><li>Pandas</li><li>NumPy</li><li>SQL</li><li>Tableau</li></ul>
+                            <div class="xp-body" id="xp-03-body">
+                                <div class="xp-body-inner">
+                                    <ul class="xp-points">
+                                    <li>Co-authored paper on urban tree cooling efficacy in Phoenix's extreme heat</li>
+                                    <li>Collected 100+ environmental variables across field sites, &lt;2% error margin</li>
+                                    <li>Processed 5,000+ data points — Python, Pandas, NumPy, SQL</li>
+                                    <li>Regression + Monte Carlo simulations improved predictive accuracy by 23%</li>
+                                    <li>Built Tableau dashboards that cut stakeholder review time 40%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="xp" style="--i:3">
+                            <h2 class="xp-h">
+                                <button class="xp-head" type="button" aria-expanded="false" aria-controls="xp-04-body">
+                                    <span class="xp-num">04</span>
+                                    <span class="xp-main">
+                                        <span class="xp-impact">Designed a full health-tech product: clinician dashboard and patient app</span>
+                                        <span class="xp-role">Lead Software Engineer <span class="xp-at">·</span> BariTrack</span>
+                                    </span>
+                                    <span class="xp-side">
+                                        <span class="xp-date">Jul — Nov 2025</span>
+                                        <span class="xp-type">Part-time</span>
+                                    </span>
+                                    <span class="xp-icon" aria-hidden="true"></span>
+                                </button>
+                            </h2>
+                            <ul class="xp-tags" aria-label="Technologies"><li>React</li><li>Flutter</li><li>API Design</li><li>PHI Security</li></ul>
+                            <div class="xp-body" id="xp-04-body">
+                                <div class="xp-body-inner">
+                                    <ul class="xp-points">
+                                    <li>Designed full product — React clinician dashboard, Flutter patient app, secure API</li>
+                                    <li>Built tracking workflows for weight, nutrition, hydration, activity, symptoms</li>
+                                    <li>Created provider views for longitudinal data visualization and risk monitoring</li>
+                                    <li>Implemented PHI-compliant auth, role-based access, and structured data models</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="xp" style="--i:4">
+                            <h2 class="xp-h">
+                                <button class="xp-head" type="button" aria-expanded="false" aria-controls="xp-05-body">
+                                    <span class="xp-num">05</span>
+                                    <span class="xp-main">
+                                        <span class="xp-impact">Integrated a quantum algorithm into production, 20% faster</span>
+                                        <span class="xp-role">Software Development Intern <span class="xp-at">·</span> QQuantify</span>
+                                    </span>
+                                    <span class="xp-side">
+                                        <span class="xp-date">Sep — Nov 2023</span>
+                                        <span class="xp-type">Remote</span>
+                                    </span>
+                                    <span class="xp-icon" aria-hidden="true"></span>
+                                </button>
+                            </h2>
+                            <ul class="xp-tags" aria-label="Technologies"><li>Python</li><li>C++</li><li>Quantum Computing</li></ul>
+                            <div class="xp-body" id="xp-05-body">
+                                <div class="xp-body-inner">
+                                    <ul class="xp-points">
+                                    <li>Integrated quantum algorithm into production systems — 20% faster processing (Python, C++)</li>
+                                    <li>Reduced qubit decoherence 10% through applied research on emerging techniques</li>
+                                    <li>Shipped 5 solutions across cross-functional teams of devs, analysts, and PMs</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="xp" style="--i:5">
+                            <h2 class="xp-h">
+                                <button class="xp-head" type="button" aria-expanded="false" aria-controls="xp-06-body">
+                                    <span class="xp-num">06</span>
+                                    <span class="xp-main">
+                                        <span class="xp-impact">Ran QA for a major release: 20% fewer bugs</span>
+                                        <span class="xp-role">Software Engineer Intern <span class="xp-at">·</span> KM Data Strategists</span>
+                                    </span>
+                                    <span class="xp-side">
+                                        <span class="xp-date">May — Aug 2023</span>
+                                        <span class="xp-type">Remote</span>
+                                    </span>
+                                    <span class="xp-icon" aria-hidden="true"></span>
+                                </button>
+                            </h2>
+                            <ul class="xp-tags" aria-label="Technologies"><li>QA Testing</li><li>JIRA</li><li>Agile</li></ul>
+                            <div class="xp-body" id="xp-06-body">
+                                <div class="xp-body-inner">
+                                    <ul class="xp-points">
+                                    <li>Ran end-to-end QA for a major release — bugs down 20%, user satisfaction up 15%</li>
+                                    <li>Managed sprints in JIRA, tracked user stories to 100% on-time delivery</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="xp" style="--i:6">
+                            <h2 class="xp-h">
+                                <button class="xp-head" type="button" aria-expanded="false" aria-controls="xp-07-body">
+                                    <span class="xp-num">07</span>
+                                    <span class="xp-main">
+                                        <span class="xp-impact">Led a team building a wayfinding app for visually impaired students</span>
+                                        <span class="xp-role">Team Lead — Engineering Projects in Community Service <span class="xp-at">·</span> EPICS at ASU</span>
+                                    </span>
+                                    <span class="xp-side">
+                                        <span class="xp-date">Jan — May 2023</span>
+                                        <span class="xp-type">On-site</span>
+                                    </span>
+                                    <span class="xp-icon" aria-hidden="true"></span>
+                                </button>
+                            </h2>
+                            <ul class="xp-tags" aria-label="Technologies"><li>Flutter</li><li>Accessibility</li><li>Team Leadership</li></ul>
+                            <div class="xp-body" id="xp-07-body">
+                                <div class="xp-body-inner">
+                                    <ul class="xp-points">
+                                    <li>Led team building a Flutter wayfinding app for visually impaired students</li>
+                                    <li>Delivered on time, under budget — facilitated ideation and unblocked the team</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="xp" style="--i:7">
+                            <h2 class="xp-h">
+                                <button class="xp-head" type="button" aria-expanded="false" aria-controls="xp-08-body">
+                                    <span class="xp-num">08</span>
+                                    <span class="xp-main">
+                                        <span class="xp-impact">Built a web interface for real-time remote data access</span>
+                                        <span class="xp-role">Web Development & Database Intern <span class="xp-at">·</span> Loginware Softech</span>
+                                    </span>
+                                    <span class="xp-side">
+                                        <span class="xp-date">May 2022</span>
+                                        <span class="xp-type">On-site</span>
+                                    </span>
+                                    <span class="xp-icon" aria-hidden="true"></span>
+                                </button>
+                            </h2>
+                            <ul class="xp-tags" aria-label="Technologies"><li>Web Development</li><li>Third-party APIs</li><li>Databases</li></ul>
+                            <div class="xp-body" id="xp-08-body">
+                                <div class="xp-body-inner">
+                                    <ul class="xp-points">
+                                    <li>Built extensible web interface for real-time remote data access and control</li>
+                                    <li>Optimized frontend and added features — engagement up 15%</li>
+                                    <li>Integrated third-party APIs to extend platform functionality</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-content" id="page-skills">
+                <button class="back-btn" onclick="PageNav.close()">
+                    <span class="back-btn-arrow">←</span>
+                    Back
+                </button>
+
+                <div class="skills-inner">
+                    <div class="work-intro">
+                        <h1 class="work-heading">Skills</h1>
+                        <p class="work-subheading"><span class="hint-pointer">Hover a folder · or use ← → keys</span><span class="hint-touch">Tap a folder · or a group below</span></p>
+                    </div>
+
+                    <div class="riffle-layout" data-riffle>
                         <div class="riffle-stage">
-                            <div class="riffle-figure" id="work-riffle"></div>
+                            <div class="riffle-figure" data-label="A tray of 8 folders, one per skill group. Hover or use the arrow keys to pull a folder."></div>
                         </div>
-
-                        <div class="role-detail" aria-live="polite">
-                        <article class="role" id="role-01" data-n="01">
-                            <p class="role-num">01 <span>/ 08</span></p>
-                            <h2 class="role-title">Undergraduate Teaching Assistant</h2>
-                            <p class="role-company">Fulton Engineering · Arizona State University</p>
-                            <p class="role-meta"><span>Aug 2025 — Jan 2026</span><span class="role-type">Part-time</span></p>
-                            <ul class="role-points">
-                                <li>Taught SER 322 Database Management — SQL, ER modeling, schema design</li>
-                                <li>Ran weekly labs and office hours for 50+ students, clearing 90% of queries live</li>
-                                <li>Graded 100+ assignments with rubric-aligned feedback</li>
-                                <li>Drove 15% lift in average student performance through targeted review sessions</li>
-                            </ul>
-                        </article>
-                        <article class="role" id="role-02" data-n="02">
-                            <p class="role-num">02 <span>/ 08</span></p>
-                            <h2 class="role-title">Vice President, Engineering</h2>
-                            <p class="role-company">Operation Sundevil: remixed</p>
-                            <p class="role-meta"><span>Jul 2025 — Present</span><span class="role-type">Contract</span></p>
-                            <ul class="role-points">
-                                <li>Shipped a cybersecurity web app end-to-end — React frontend, Flask API, secure auth</li>
-                                <li>Architected RBAC and permissioning for sensitive views in high-trust environments</li>
-                                <li>Wired client components to RESTful endpoints for low-latency interactions</li>
-                                <li>Owned project roadmap, coordinated dev sprints, shipped on schedule</li>
-                            </ul>
-                        </article>
-                        <article class="role" id="role-03" data-n="03">
-                            <p class="role-num">03 <span>/ 08</span></p>
-                            <h2 class="role-title">Research Assistant</h2>
-                            <p class="role-company">Arizona State University</p>
-                            <p class="role-meta"><span>Jun 2025 — Jan 2026</span><span class="role-type">Part-time</span></p>
-                            <ul class="role-points">
-                                <li>Co-authored paper on urban tree cooling efficacy in Phoenix's extreme heat</li>
-                                <li>Collected 100+ environmental variables across field sites, &lt;2% error margin</li>
-                                <li>Processed 5,000+ data points — Python, Pandas, NumPy, SQL</li>
-                                <li>Regression + Monte Carlo simulations improved predictive accuracy by 23%</li>
-                                <li>Built Tableau dashboards that cut stakeholder review time 40%</li>
-                            </ul>
-                        </article>
-                        <article class="role" id="role-04" data-n="04">
-                            <p class="role-num">04 <span>/ 08</span></p>
-                            <h2 class="role-title">Lead Software Engineer</h2>
-                            <p class="role-company">BariTrack</p>
-                            <p class="role-meta"><span>Jul — Nov 2025</span><span class="role-type">Part-time</span></p>
-                            <ul class="role-points">
-                                <li>Designed full product — React clinician dashboard, Flutter patient app, secure API</li>
-                                <li>Built tracking workflows for weight, nutrition, hydration, activity, symptoms</li>
-                                <li>Created provider views for longitudinal data visualization and risk monitoring</li>
-                                <li>Implemented PHI-compliant auth, role-based access, and structured data models</li>
-                            </ul>
-                        </article>
-                        <article class="role" id="role-05" data-n="05">
-                            <p class="role-num">05 <span>/ 08</span></p>
-                            <h2 class="role-title">Software Development Intern</h2>
-                            <p class="role-company">QQuantify</p>
-                            <p class="role-meta"><span>Sep — Nov 2023</span><span class="role-type">Remote</span></p>
-                            <ul class="role-points">
-                                <li>Integrated quantum algorithm into production systems — 20% faster processing (Python, C++)</li>
-                                <li>Reduced qubit decoherence 10% through applied research on emerging techniques</li>
-                                <li>Shipped 5 solutions across cross-functional teams of devs, analysts, and PMs</li>
-                            </ul>
-                        </article>
-                        <article class="role" id="role-06" data-n="06">
-                            <p class="role-num">06 <span>/ 08</span></p>
-                            <h2 class="role-title">Software Engineer Intern</h2>
-                            <p class="role-company">KM Data Strategists</p>
-                            <p class="role-meta"><span>May — Aug 2023</span><span class="role-type">Remote</span></p>
-                            <ul class="role-points">
-                                <li>Ran end-to-end QA for a major release — bugs down 20%, user satisfaction up 15%</li>
-                                <li>Managed sprints in JIRA, tracked user stories to 100% on-time delivery</li>
-                            </ul>
-                        </article>
-                        <article class="role" id="role-07" data-n="07">
-                            <p class="role-num">07 <span>/ 08</span></p>
-                            <h2 class="role-title">Team Lead — Engineering Projects in Community Service</h2>
-                            <p class="role-company">EPICS at ASU</p>
-                            <p class="role-meta"><span>Jan — May 2023</span><span class="role-type">On-site</span></p>
-                            <ul class="role-points">
-                                <li>Led team building a Flutter wayfinding app for visually impaired students</li>
-                                <li>Delivered on time, under budget — facilitated ideation and unblocked the team</li>
-                            </ul>
-                        </article>
-                        <article class="role" id="role-08" data-n="08">
-                            <p class="role-num">08 <span>/ 08</span></p>
-                            <h2 class="role-title">Web Development & Database Intern</h2>
-                            <p class="role-company">Loginware Softech</p>
-                            <p class="role-meta"><span>May 2022</span><span class="role-type">On-site</span></p>
-                            <ul class="role-points">
-                                <li>Built extensible web interface for real-time remote data access and control</li>
-                                <li>Optimized frontend and added features — engagement up 15%</li>
-                                <li>Integrated third-party APIs to extend platform functionality</li>
-                            </ul>
-                        </article>
+                        <div class="rf-detail" aria-live="polite">
+                            <article class="rf-item" id="skill-01" data-n="01">
+                                <p class="rf-num">01 <span>/ 08</span></p>
+                                <h2 class="rf-title">Languages</h2>
+                                <p class="rf-blurb">What I write in day to day.</p>
+                                <ul class="rf-chips">
+                                    <li>Python</li>
+                                    <li>C++</li>
+                                    <li>JavaScript</li>
+                                    <li>SQL</li>
+                                    <li>Dart</li>
+                                </ul>
+                            </article>
+                            <article class="rf-item" id="skill-02" data-n="02">
+                                <p class="rf-num">02 <span>/ 08</span></p>
+                                <h2 class="rf-title">Frontend</h2>
+                                <p class="rf-blurb">Interfaces, from dashboards to this site.</p>
+                                <ul class="rf-chips">
+                                    <li>React</li>
+                                    <li>HTML</li>
+                                    <li>CSS</li>
+                                    <li>Three.js</li>
+                                    <li>WebGL</li>
+                                </ul>
+                            </article>
+                            <article class="rf-item" id="skill-03" data-n="03">
+                                <p class="rf-num">03 <span>/ 08</span></p>
+                                <h2 class="rf-title">Backend & APIs</h2>
+                                <p class="rf-blurb">Services behind the apps I ship.</p>
+                                <ul class="rf-chips">
+                                    <li>Flask</li>
+                                    <li>REST APIs</li>
+                                    <li>Authentication</li>
+                                    <li>API Design</li>
+                                </ul>
+                            </article>
+                            <article class="rf-item" id="skill-04" data-n="04">
+                                <p class="rf-num">04 <span>/ 08</span></p>
+                                <h2 class="rf-title">Mobile</h2>
+                                <p class="rf-blurb">Cross-platform apps for patients and students.</p>
+                                <ul class="rf-chips">
+                                    <li>Flutter</li>
+                                    <li>Dart</li>
+                                </ul>
+                            </article>
+                            <article class="rf-item" id="skill-05" data-n="05">
+                                <p class="rf-num">05 <span>/ 08</span></p>
+                                <h2 class="rf-title">Data & Analytics</h2>
+                                <p class="rf-blurb">Cleaning, modeling and presenting data.</p>
+                                <ul class="rf-chips">
+                                    <li>Pandas</li>
+                                    <li>NumPy</li>
+                                    <li>Tableau</li>
+                                    <li>Regression</li>
+                                    <li>Monte Carlo Simulation</li>
+                                </ul>
+                            </article>
+                            <article class="rf-item" id="skill-06" data-n="06">
+                                <p class="rf-num">06 <span>/ 08</span></p>
+                                <h2 class="rf-title">Databases</h2>
+                                <p class="rf-blurb">Designing data, and teaching it as a TA.</p>
+                                <ul class="rf-chips">
+                                    <li>SQL</li>
+                                    <li>ER Modeling</li>
+                                    <li>Schema Design</li>
+                                    <li>MySQL</li>
+                                </ul>
+                            </article>
+                            <article class="rf-item" id="skill-07" data-n="07">
+                                <p class="rf-num">07 <span>/ 08</span></p>
+                                <h2 class="rf-title">Security</h2>
+                                <p class="rf-blurb">Building for high-trust, sensitive data.</p>
+                                <ul class="rf-chips">
+                                    <li>RBAC</li>
+                                    <li>PHI-compliant Auth</li>
+                                    <li>Secure Web Apps</li>
+                                </ul>
+                            </article>
+                            <article class="rf-item" id="skill-08" data-n="08">
+                                <p class="rf-num">08 <span>/ 08</span></p>
+                                <h2 class="rf-title">Tools & Process</h2>
+                                <p class="rf-blurb">How I keep teams shipping on time.</p>
+                                <ul class="rf-chips">
+                                    <li>Git</li>
+                                    <li>GitHub</li>
+                                    <li>JIRA</li>
+                                    <li>Agile Sprints</li>
+                                    <li>QA Testing</li>
+                                </ul>
+                            </article>
                         </div>
                     </div>
 
-                    <ol class="role-index" id="role-index" aria-label="All roles"></ol>
+                    <ol class="rf-index" aria-label="All skill groups"></ol>
                 </div>
             </div>
             <!-- ═══ END WORK ═══ -->
@@ -292,7 +518,8 @@
 <script src="js/blob.js"></script>
 <script src="js/hand-control.js"></script>
 <script src="js/hand-control-ui.js"></script>
-<script type="module" src="js/work-riffle.js"></script>
+<script src="js/experience.js"></script>
+<script type="module" src="js/riffle-section.js"></script>
 
 <script>
     // ── Page Navigation ────────────────────────────────────
@@ -367,7 +594,7 @@
     };
 
     // ── Initialize everything ──────────────────────────────
-    Cursor.init({ hoverElements: '.nav-link, .toggle-option, .back-btn, .role-tag, .riffle-figure, .role-index button' });
+    Cursor.init({ hoverElements: '.nav-link, .toggle-option, .back-btn, .role-tag, .xp-head, .riffle-figure, .rf-index button' });
     initNavScramble();
 
     const shaderMaterial = GrainShader.init('grain-canvas', '.content-panel');
