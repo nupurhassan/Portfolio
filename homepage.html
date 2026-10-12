@@ -171,199 +171,110 @@
                 <div class="work-inner">
                     <div class="work-intro">
                         <h1 class="work-heading">Experience</h1>
-                        <p class="work-subheading">Select a role to expand</p>
+                        <p class="work-subheading"><span class="hint-pointer">Hover the cards · or use ← → keys</span><span class="hint-touch">Tap a card · or a role below</span></p>
                     </div>
 
-                    <div class="folder-stack">
-
-                        <div class="work-folder" onclick="toggleFolder(this)">
-                            <div class="folder-body">
-                                <span class="folder-hint">+</span>
-                                <div class="folder-header">
-                                    <div>
-                                        <div class="folder-role">Undergraduate Teaching Assistant</div>
-                                        <div class="folder-company">Fulton Engineering · Arizona State University</div>
-                                    </div>
-                                    <div class="folder-meta">
-                                        <span class="folder-date">Aug 2025 — Jan 2026</span>
-                                        <span class="folder-type">Part-time</span>
-                                    </div>
-                                </div>
-                                <div class="folder-details">
-                                    <div class="folder-detail-list">
-                                        <p class="folder-detail">Taught SER 322 Database Management — SQL, ER modeling, schema design</p>
-                                        <p class="folder-detail">Ran weekly labs and office hours for 50+ students, clearing 90% of queries live</p>
-                                        <p class="folder-detail">Graded 100+ assignments with rubric-aligned feedback</p>
-                                        <p class="folder-detail">Drove 15% lift in average student performance through targeted review sessions</p>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="riffle-layout">
+                        <div class="riffle-stage">
+                            <div class="riffle-figure" id="work-riffle"></div>
                         </div>
 
-                        <div class="work-folder" onclick="toggleFolder(this)">
-                            <div class="folder-body">
-                                <span class="folder-hint">+</span>
-                                <div class="folder-header">
-                                    <div>
-                                        <div class="folder-role">Vice President, Engineering</div>
-                                        <div class="folder-company">Operation Sundevil: remixed</div>
-                                    </div>
-                                    <div class="folder-meta">
-                                        <span class="folder-date">Jul 2025 — Present</span>
-                                        <span class="folder-type">Contract</span>
-                                    </div>
-                                </div>
-                                <div class="folder-details">
-                                    <div class="folder-detail-list">
-                                        <p class="folder-detail">Shipped a cybersecurity web app end-to-end — React frontend, Flask API, secure auth</p>
-                                        <p class="folder-detail">Architected RBAC and permissioning for sensitive views in high-trust environments</p>
-                                        <p class="folder-detail">Wired client components to RESTful endpoints for low-latency interactions</p>
-                                        <p class="folder-detail">Owned project roadmap, coordinated dev sprints, shipped on schedule</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="role-detail" aria-live="polite">
+                        <article class="role" id="role-01" data-n="01">
+                            <p class="role-num">01 <span>/ 08</span></p>
+                            <h2 class="role-title">Undergraduate Teaching Assistant</h2>
+                            <p class="role-company">Fulton Engineering · Arizona State University</p>
+                            <p class="role-meta"><span>Aug 2025 — Jan 2026</span><span class="role-type">Part-time</span></p>
+                            <ul class="role-points">
+                                <li>Taught SER 322 Database Management — SQL, ER modeling, schema design</li>
+                                <li>Ran weekly labs and office hours for 50+ students, clearing 90% of queries live</li>
+                                <li>Graded 100+ assignments with rubric-aligned feedback</li>
+                                <li>Drove 15% lift in average student performance through targeted review sessions</li>
+                            </ul>
+                        </article>
+                        <article class="role" id="role-02" data-n="02">
+                            <p class="role-num">02 <span>/ 08</span></p>
+                            <h2 class="role-title">Vice President, Engineering</h2>
+                            <p class="role-company">Operation Sundevil: remixed</p>
+                            <p class="role-meta"><span>Jul 2025 — Present</span><span class="role-type">Contract</span></p>
+                            <ul class="role-points">
+                                <li>Shipped a cybersecurity web app end-to-end — React frontend, Flask API, secure auth</li>
+                                <li>Architected RBAC and permissioning for sensitive views in high-trust environments</li>
+                                <li>Wired client components to RESTful endpoints for low-latency interactions</li>
+                                <li>Owned project roadmap, coordinated dev sprints, shipped on schedule</li>
+                            </ul>
+                        </article>
+                        <article class="role" id="role-03" data-n="03">
+                            <p class="role-num">03 <span>/ 08</span></p>
+                            <h2 class="role-title">Research Assistant</h2>
+                            <p class="role-company">Arizona State University</p>
+                            <p class="role-meta"><span>Jun 2025 — Jan 2026</span><span class="role-type">Part-time</span></p>
+                            <ul class="role-points">
+                                <li>Co-authored paper on urban tree cooling efficacy in Phoenix's extreme heat</li>
+                                <li>Collected 100+ environmental variables across field sites, &lt;2% error margin</li>
+                                <li>Processed 5,000+ data points — Python, Pandas, NumPy, SQL</li>
+                                <li>Regression + Monte Carlo simulations improved predictive accuracy by 23%</li>
+                                <li>Built Tableau dashboards that cut stakeholder review time 40%</li>
+                            </ul>
+                        </article>
+                        <article class="role" id="role-04" data-n="04">
+                            <p class="role-num">04 <span>/ 08</span></p>
+                            <h2 class="role-title">Lead Software Engineer</h2>
+                            <p class="role-company">BariTrack</p>
+                            <p class="role-meta"><span>Jul — Nov 2025</span><span class="role-type">Part-time</span></p>
+                            <ul class="role-points">
+                                <li>Designed full product — React clinician dashboard, Flutter patient app, secure API</li>
+                                <li>Built tracking workflows for weight, nutrition, hydration, activity, symptoms</li>
+                                <li>Created provider views for longitudinal data visualization and risk monitoring</li>
+                                <li>Implemented PHI-compliant auth, role-based access, and structured data models</li>
+                            </ul>
+                        </article>
+                        <article class="role" id="role-05" data-n="05">
+                            <p class="role-num">05 <span>/ 08</span></p>
+                            <h2 class="role-title">Software Development Intern</h2>
+                            <p class="role-company">QQuantify</p>
+                            <p class="role-meta"><span>Sep — Nov 2023</span><span class="role-type">Remote</span></p>
+                            <ul class="role-points">
+                                <li>Integrated quantum algorithm into production systems — 20% faster processing (Python, C++)</li>
+                                <li>Reduced qubit decoherence 10% through applied research on emerging techniques</li>
+                                <li>Shipped 5 solutions across cross-functional teams of devs, analysts, and PMs</li>
+                            </ul>
+                        </article>
+                        <article class="role" id="role-06" data-n="06">
+                            <p class="role-num">06 <span>/ 08</span></p>
+                            <h2 class="role-title">Software Engineer Intern</h2>
+                            <p class="role-company">KM Data Strategists</p>
+                            <p class="role-meta"><span>May — Aug 2023</span><span class="role-type">Remote</span></p>
+                            <ul class="role-points">
+                                <li>Ran end-to-end QA for a major release — bugs down 20%, user satisfaction up 15%</li>
+                                <li>Managed sprints in JIRA, tracked user stories to 100% on-time delivery</li>
+                            </ul>
+                        </article>
+                        <article class="role" id="role-07" data-n="07">
+                            <p class="role-num">07 <span>/ 08</span></p>
+                            <h2 class="role-title">Team Lead — Engineering Projects in Community Service</h2>
+                            <p class="role-company">EPICS at ASU</p>
+                            <p class="role-meta"><span>Jan — May 2023</span><span class="role-type">On-site</span></p>
+                            <ul class="role-points">
+                                <li>Led team building a Flutter wayfinding app for visually impaired students</li>
+                                <li>Delivered on time, under budget — facilitated ideation and unblocked the team</li>
+                            </ul>
+                        </article>
+                        <article class="role" id="role-08" data-n="08">
+                            <p class="role-num">08 <span>/ 08</span></p>
+                            <h2 class="role-title">Web Development & Database Intern</h2>
+                            <p class="role-company">Loginware Softech</p>
+                            <p class="role-meta"><span>May 2022</span><span class="role-type">On-site</span></p>
+                            <ul class="role-points">
+                                <li>Built extensible web interface for real-time remote data access and control</li>
+                                <li>Optimized frontend and added features — engagement up 15%</li>
+                                <li>Integrated third-party APIs to extend platform functionality</li>
+                            </ul>
+                        </article>
                         </div>
-
-                        <div class="work-folder" onclick="toggleFolder(this)">
-                            <div class="folder-body">
-                                <span class="folder-hint">+</span>
-                                <div class="folder-header">
-                                    <div>
-                                        <div class="folder-role">Research Assistant</div>
-                                        <div class="folder-company">Arizona State University</div>
-                                    </div>
-                                    <div class="folder-meta">
-                                        <span class="folder-date">Jun 2025 — Jan 2026</span>
-                                        <span class="folder-type">Part-time</span>
-                                    </div>
-                                </div>
-                                <div class="folder-details">
-                                    <div class="folder-detail-list">
-                                        <p class="folder-detail">Co-authored paper on urban tree cooling efficacy in Phoenix's extreme heat</p>
-                                        <p class="folder-detail">Collected 100+ environmental variables across field sites, &lt;2% error margin</p>
-                                        <p class="folder-detail">Processed 5,000+ data points — Python, Pandas, NumPy, SQL</p>
-                                        <p class="folder-detail">Regression + Monte Carlo simulations improved predictive accuracy by 23%</p>
-                                        <p class="folder-detail">Built Tableau dashboards that cut stakeholder review time 40%</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="work-folder" onclick="toggleFolder(this)">
-                            <div class="folder-body">
-                                <span class="folder-hint">+</span>
-                                <div class="folder-header">
-                                    <div>
-                                        <div class="folder-role">Lead Software Engineer</div>
-                                        <div class="folder-company">BariTrack</div>
-                                    </div>
-                                    <div class="folder-meta">
-                                        <span class="folder-date">Jul — Nov 2025</span>
-                                        <span class="folder-type">Part-time</span>
-                                    </div>
-                                </div>
-                                <div class="folder-details">
-                                    <div class="folder-detail-list">
-                                        <p class="folder-detail">Designed full product — React clinician dashboard, Flutter patient app, secure API</p>
-                                        <p class="folder-detail">Built tracking workflows for weight, nutrition, hydration, activity, symptoms</p>
-                                        <p class="folder-detail">Created provider views for longitudinal data visualization and risk monitoring</p>
-                                        <p class="folder-detail">Implemented PHI-compliant auth, role-based access, and structured data models</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="work-folder" onclick="toggleFolder(this)">
-                            <div class="folder-body">
-                                <span class="folder-hint">+</span>
-                                <div class="folder-header">
-                                    <div>
-                                        <div class="folder-role">Software Development Intern</div>
-                                        <div class="folder-company">QQuantify</div>
-                                    </div>
-                                    <div class="folder-meta">
-                                        <span class="folder-date">Sep — Nov 2023</span>
-                                        <span class="folder-type">Remote</span>
-                                    </div>
-                                </div>
-                                <div class="folder-details">
-                                    <div class="folder-detail-list">
-                                        <p class="folder-detail">Integrated quantum algorithm into production systems — 20% faster processing (Python, C++)</p>
-                                        <p class="folder-detail">Reduced qubit decoherence 10% through applied research on emerging techniques</p>
-                                        <p class="folder-detail">Shipped 5 solutions across cross-functional teams of devs, analysts, and PMs</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="work-folder" onclick="toggleFolder(this)">
-                            <div class="folder-body">
-                                <span class="folder-hint">+</span>
-                                <div class="folder-header">
-                                    <div>
-                                        <div class="folder-role">Software Engineer Intern</div>
-                                        <div class="folder-company">KM Data Strategists</div>
-                                    </div>
-                                    <div class="folder-meta">
-                                        <span class="folder-date">May — Aug 2023</span>
-                                        <span class="folder-type">Remote</span>
-                                    </div>
-                                </div>
-                                <div class="folder-details">
-                                    <div class="folder-detail-list">
-                                        <p class="folder-detail">Ran end-to-end QA for a major release — bugs down 20%, user satisfaction up 15%</p>
-                                        <p class="folder-detail">Managed sprints in JIRA, tracked user stories to 100% on-time delivery</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="work-folder" onclick="toggleFolder(this)">
-                            <div class="folder-body">
-                                <span class="folder-hint">+</span>
-                                <div class="folder-header">
-                                    <div>
-                                        <div class="folder-role">Team Lead — Engineering Projects in Community Service</div>
-                                        <div class="folder-company">EPICS at ASU</div>
-                                    </div>
-                                    <div class="folder-meta">
-                                        <span class="folder-date">Jan — May 2023</span>
-                                        <span class="folder-type">On-site</span>
-                                    </div>
-                                </div>
-                                <div class="folder-details">
-                                    <div class="folder-detail-list">
-                                        <p class="folder-detail">Led team building a Flutter wayfinding app for visually impaired students</p>
-                                        <p class="folder-detail">Delivered on time, under budget — facilitated ideation and unblocked the team</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="work-folder" onclick="toggleFolder(this)">
-                            <div class="folder-body">
-                                <span class="folder-hint">+</span>
-                                <div class="folder-header">
-                                    <div>
-                                        <div class="folder-role">Web Development & Database Intern</div>
-                                        <div class="folder-company">Loginware Softech</div>
-                                    </div>
-                                    <div class="folder-meta">
-                                        <span class="folder-date">May 2022</span>
-                                        <span class="folder-type">On-site</span>
-                                    </div>
-                                </div>
-                                <div class="folder-details">
-                                    <div class="folder-detail-list">
-                                        <p class="folder-detail">Built extensible web interface for real-time remote data access and control</p>
-                                        <p class="folder-detail">Optimized frontend and added features — engagement up 15%</p>
-                                        <p class="folder-detail">Integrated third-party APIs to extend platform functionality</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
+
+                    <ol class="role-index" id="role-index" aria-label="All roles"></ol>
                 </div>
             </div>
             <!-- ═══ END WORK ═══ -->
@@ -381,6 +292,7 @@
 <script src="js/blob.js"></script>
 <script src="js/hand-control.js"></script>
 <script src="js/hand-control-ui.js"></script>
+<script type="module" src="js/work-riffle.js"></script>
 
 <script>
     // ── Page Navigation ────────────────────────────────────
@@ -455,7 +367,7 @@
     };
 
     // ── Initialize everything ──────────────────────────────
-    Cursor.init({ hoverElements: '.nav-link, .toggle-option, .back-btn, .role-tag, .work-folder' });
+    Cursor.init({ hoverElements: '.nav-link, .toggle-option, .back-btn, .role-tag, .riffle-figure, .role-index button' });
     initNavScramble();
 
     const shaderMaterial = GrainShader.init('grain-canvas', '.content-panel');
@@ -464,14 +376,6 @@
     Blob.init('blob-canvas');
     PageNav.init();
 
-    // folder toggle
-    function toggleFolder(el) {
-        const wasOpen = el.classList.contains('open');
-        // close all first
-        document.querySelectorAll('.work-folder.open').forEach(f => f.classList.remove('open'));
-        // open clicked one (unless it was already open)
-        if (!wasOpen) el.classList.add('open');
-    }
 
     // keyboard support for toggles
     document.querySelectorAll('.toggle-option').forEach(option => {
