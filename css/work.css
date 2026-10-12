@@ -1,21 +1,39 @@
-/* work page */
+/* work page — Riffle tray of roles */
+
+/* ink = the text color that sits ON the panel, as rgb channels
+   dark theme: panel is warm-gray → ink is black
+   light theme: panel is dark-gray → ink is white */
+[data-theme="dark"] .work-inner {
+    --ink: 0, 0, 0;
+    --panel: #d4cfc8;
+    /* Hairline figure colors, matched to the panel */
+    --hairline-plate: #d4cfc8;
+    --hairline-hi: #0a0a0a;
+    --hairline-edge: #4d4943;
+    --hairline-mid: #8a847b;
+    --hairline-lo: #b9b3aa;
+    --hairline-stroke: 1;
+}
+
+[data-theme="light"] .work-inner {
+    --ink: 255, 255, 255;
+    --panel: #1a1a1a;
+    --hairline-plate: #1a1a1a;
+    --hairline-hi: #f7f5f2;
+    --hairline-edge: #b3aea6;
+    --hairline-mid: #5f5b55;
+    --hairline-lo: #35322f;
+    --hairline-stroke: 1;
+}
 
 .work-inner {
     padding: 0 44px 80px;
     max-width: 100%;
 }
 
-/* text color that sits ON the panel */
-/* dark theme: panel is warm-gray → text is near-black */
-/* light theme: panel is dark-gray → text is off-white */
-.work-inner,
-.work-inner * {
-    --card-text: var(--bg);
-    --card-bg: var(--bg);
-}
-
+/* ── intro ── */
 .work-intro {
-    padding: 16px 0 44px;
+    padding: 16px 0 28px;
     opacity: 0;
     transform: translateY(20px);
     animation: aboutFadeUp 0.6s ease 0.2s forwards;
@@ -25,7 +43,7 @@
     font-family: var(--font-display);
     font-size: 38px;
     font-weight: 800;
-    color: var(--card-text);
+    color: rgba(var(--ink), 0.85);
     letter-spacing: -0.5px;
     line-height: 1.1;
     margin-bottom: 8px;
@@ -36,246 +54,210 @@
     font-size: 10px;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: var(--card-text);
-    opacity: 0.3;
+    color: rgba(var(--ink), 0.35);
 }
 
-/* ── card stack ── */
-.folder-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+/* hint text follows the input: hover + keys on desktop, tap on touch screens */
+.hint-touch { display: none; }
+
+@media (hover: none) {
+    .hint-pointer { display: none; }
+    .hint-touch { display: inline; }
 }
 
-/* ── card ── */
-.work-folder {
-    position: relative;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+/* ── tray + detail ── */
+.riffle-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
     opacity: 0;
-    transform: translateY(10px);
-    animation: aboutFadeUp 0.4s ease forwards;
+    transform: translateY(14px);
+    animation: aboutFadeUp 0.6s ease 0.3s forwards;
 }
 
-.work-folder:nth-child(1) { animation-delay: 0.25s; }
-.work-folder:nth-child(2) { animation-delay: 0.30s; }
-.work-folder:nth-child(3) { animation-delay: 0.35s; }
-.work-folder:nth-child(4) { animation-delay: 0.40s; }
-.work-folder:nth-child(5) { animation-delay: 0.45s; }
-.work-folder:nth-child(6) { animation-delay: 0.50s; }
-.work-folder:nth-child(7) { animation-delay: 0.55s; }
-.work-folder:nth-child(8) { animation-delay: 0.60s; }
-
-/* ── card body ── */
-.folder-body {
-    position: relative;
-    padding: 20px 28px;
-    border-radius: 10px;
-    transition: all 0.35s ease;
+.riffle-figure {
+    width: 100%;
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
 }
 
-/* dark theme: light card on warm-gray panel */
-[data-theme="dark"] .folder-body {
-    background: rgba(255, 255, 255, 0.045);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+.riffle-figure:focus-visible {
+    box-shadow: 0 0 0 1px rgba(var(--ink), 0.35);
 }
 
-[data-theme="dark"] .work-folder:hover .folder-body {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.06);
+.riffle-layout.no-figure {
+    grid-template-columns: 1fr;
 }
 
-[data-theme="dark"] .work-folder.open .folder-body {
-    background: rgba(255, 255, 255, 0.09);
-    border-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+.riffle-layout.no-figure .riffle-stage {
+    display: none;
 }
 
-/* light theme: dark card on dark panel */
-[data-theme="light"] .folder-body {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-[data-theme="light"] .work-folder:hover .folder-body {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.07);
-}
-
-[data-theme="light"] .work-folder.open .folder-body {
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.09);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* text colors on panel */
-[data-theme="dark"] .folder-role { color: rgba(0, 0, 0, 0.85); }
-[data-theme="dark"] .folder-company { color: rgba(0, 0, 0, 0.4); }
-[data-theme="dark"] .folder-date { color: rgba(0, 0, 0, 0.3); }
-[data-theme="dark"] .folder-type { color: rgba(0, 0, 0, 0.3); border-color: rgba(0, 0, 0, 0.12); }
-[data-theme="dark"] .folder-hint { color: rgba(0, 0, 0, 0.15); }
-[data-theme="dark"] .folder-detail { color: rgba(0, 0, 0, 0.5); }
-[data-theme="dark"] .folder-detail::before { background: rgba(0, 0, 0, 0.2); }
-[data-theme="dark"] .folder-detail-list::before { background: rgba(0, 0, 0, 0.08); }
-[data-theme="dark"] .work-heading { color: rgba(0, 0, 0, 0.85); }
-[data-theme="dark"] .work-subheading { color: rgba(0, 0, 0, 0.3); }
-
-[data-theme="light"] .folder-role { color: rgba(255, 255, 255, 0.9); }
-[data-theme="light"] .folder-company { color: rgba(255, 255, 255, 0.4); }
-[data-theme="light"] .folder-date { color: rgba(255, 255, 255, 0.3); }
-[data-theme="light"] .folder-type { color: rgba(255, 255, 255, 0.3); border-color: rgba(255, 255, 255, 0.12); }
-[data-theme="light"] .folder-hint { color: rgba(255, 255, 255, 0.15); }
-[data-theme="light"] .folder-detail { color: rgba(255, 255, 255, 0.5); }
-[data-theme="light"] .folder-detail::before { background: rgba(255, 255, 255, 0.2); }
-[data-theme="light"] .folder-detail-list::before { background: rgba(255, 255, 255, 0.08); }
-[data-theme="light"] .work-heading { color: rgba(255, 255, 255, 0.9); }
-[data-theme="light"] .work-subheading { color: rgba(255, 255, 255, 0.3); }
-
-/* ── hover states ── */
-[data-theme="dark"] .work-folder:hover .folder-hint { color: rgba(0, 0, 0, 0.3); }
-[data-theme="dark"] .work-folder:hover .folder-type { color: rgba(0, 0, 0, 0.4); }
-[data-theme="light"] .work-folder:hover .folder-hint { color: rgba(255, 255, 255, 0.3); }
-[data-theme="light"] .work-folder:hover .folder-type { color: rgba(255, 255, 255, 0.4); }
-
-/* ── header row ── */
-.folder-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
-    position: relative;
-    z-index: 1;
-}
-
-.folder-header > div:first-child {
-    flex: 1;
-    min-width: 0;
-}
-
-.folder-role {
-    font-family: var(--font-display);
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.35;
-    letter-spacing: 0.2px;
-}
-
-.folder-company {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 1px;
-    margin-top: 4px;
-}
-
-.folder-meta {
+/* ── role detail ── */
+.role-detail {
+    min-height: 300px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
-    padding-top: 2px;
 }
 
-.folder-date {
+.role {
+    width: 100%;
+}
+
+.role.is-active {
+    animation: roleIn 0.35s var(--ease-out);
+}
+
+@keyframes roleIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.role-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(var(--ink), 0.85);
+    margin-bottom: 14px;
+}
+
+.role-num span {
+    color: rgba(var(--ink), 0.3);
+}
+
+.role-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    color: rgba(var(--ink), 0.88);
+    margin-bottom: 6px;
+}
+
+.role-company {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: rgba(var(--ink), 0.5);
+    margin-bottom: 14px;
+}
+
+.role-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    white-space: nowrap;
+    color: rgba(var(--ink), 0.4);
+    margin-bottom: 20px;
 }
 
-.folder-type {
-    padding: 4px 10px;
-    border-radius: 100px;
-    font-family: var(--font-mono);
-    font-size: 8px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    white-space: nowrap;
-    transition: all 0.3s ease;
+.role-type {
+    padding: 3px 8px;
+    border: 1px solid rgba(var(--ink), 0.15);
+    border-radius: 20px;
 }
 
-/* ── expand indicator ── */
-.folder-hint {
-    position: absolute;
-    right: 28px;
-    top: 22px;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-mono);
-    font-size: 18px;
-    font-weight: 300;
-    transition: all 0.35s ease;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.work-folder.open .folder-hint {
-    transform: rotate(45deg);
-}
-
-/* ── details ── */
-.folder-details {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-                opacity 0.3s ease;
-    opacity: 0;
-    position: relative;
-    z-index: 1;
-}
-
-.work-folder.open .folder-details {
-    max-height: 400px;
-    opacity: 1;
-}
-
-.folder-detail-list {
-    padding-top: 18px;
-    margin-top: 14px;
-    position: relative;
+.role-points {
+    list-style: none;
+    padding: 0 0 0 16px;
+    margin: 0;
+    border-left: 1px solid rgba(var(--ink), 0.1);
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 9px;
 }
 
-.folder-detail-list::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-}
-
-.folder-detail {
-    font-family: var(--font-display);
-    font-size: 13px;
-    font-weight: 400;
+.role-points li {
+    font-family: var(--font-mono);
+    font-size: 12px;
     line-height: 1.6;
-    padding: 8px 0 8px 20px;
-    position: relative;
-    transition: opacity 0.2s ease;
+    color: rgba(var(--ink), 0.6);
 }
 
-.folder-detail:hover {
-    opacity: 0.75 !important;
+/* ── index of all roles ── */
+.role-index {
+    list-style: none;
+    margin: 36px 0 0;
+    padding: 0;
+    border-top: 1px solid rgba(var(--ink), 0.1);
+    opacity: 0;
+    animation: aboutFadeUp 0.6s ease 0.45s forwards;
 }
 
-.folder-detail::before {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 15px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
+.role-index li {
+    border-bottom: 1px solid rgba(var(--ink), 0.07);
+}
+
+.role-index button {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    gap: 14px;
+    align-items: baseline;
+    padding: 12px 6px;
+    background: none;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    color: rgba(var(--ink), 0.45);
+    transition: color 0.25s ease, padding-left 0.25s var(--ease-out);
+}
+
+.role-index button:hover,
+.role-index button:focus-visible {
+    color: rgba(var(--ink), 0.75);
+    outline: none;
+}
+
+.role-index button[aria-current="true"] {
+    color: rgba(var(--ink), 0.9);
+    padding-left: 12px;
+}
+
+.ri-num,
+.ri-date {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+}
+
+.ri-date {
+    text-transform: uppercase;
+    font-size: 9px;
+    opacity: 0.8;
+}
+
+.ri-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
 }
 
 /* ── responsive ── */
+@media (max-width: 1100px) {
+    .riffle-layout {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .riffle-stage {
+        max-width: 420px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .role-detail {
+        min-height: 0;
+    }
+}
+
 @media (max-width: 900px) {
     .work-inner {
         padding: 0 24px 50px;
@@ -285,27 +267,8 @@
         font-size: 30px;
     }
 
-    .folder-body {
-        padding: 16px 20px;
-    }
-
-    .folder-header {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .folder-role {
-        font-size: 14px;
-        padding-right: 30px;
-    }
-
-    .folder-hint {
-        right: 20px;
-        top: 16px;
-    }
-
-    .folder-detail {
-        font-size: 12px;
+    .role-title {
+        font-size: 20px;
     }
 }
 
@@ -314,15 +277,19 @@
         padding: 0 16px 40px;
     }
 
-    .folder-body {
-        padding: 14px 16px;
+    .role-index button {
+        grid-template-columns: 28px 1fr;
     }
 
-    .folder-role {
-        font-size: 13px;
+    .ri-date {
+        display: none;
     }
 
-    .folder-date {
-        font-size: 8px;
+    .role-points li {
+        font-size: 11px;
     }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .role.is-active { animation: none; }
 }
