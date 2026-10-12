@@ -15,6 +15,16 @@
 </head>
 <body>
 
+<script>
+    // Returning visitors skip the intro. Add ?intro to the URL to replay it.
+    (function () {
+        var forceIntro = /[?&]intro\b/.test(location.search);
+        var seen = false;
+        try { seen = localStorage.getItem('introSeen') === '1'; } catch (e) {}
+        if (seen && !forceIntro) location.replace('homepage.html');
+    })();
+</script>
+
 <div class="transition-overlay"></div>
 <div class="cursor"></div>
 
@@ -60,6 +70,8 @@
 
     const overlay = document.querySelector('.transition-overlay');
     let redirectTimeout;
+
+    try { localStorage.setItem('introSeen', '1'); } catch (e) {}
 
     function skipIntro() {
         clearTimeout(redirectTimeout);
